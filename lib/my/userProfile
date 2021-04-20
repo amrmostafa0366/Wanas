@@ -1,0 +1,377 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:wanas/Controllers/unWantedController.dart';
+import 'package:wanas/Models/ProfileTile.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:wanas/my/animation.dart';
+import 'package:wanas/my/mychat.dart';
+import 'package:wanas/my/myprofile.dart' as myid;
+import 'package:wanas/my/staticMap.dart';
+
+class UserProfile extends StatefulWidget {
+  final String id;
+  final String hisname;
+  final double latitude;
+  final double longitude;
+
+  UserProfile(this.id, this.hisname, this.latitude, this.longitude);
+
+  @override
+  _UserProfileState createState() => _UserProfileState();
+}
+
+class _UserProfileState extends State<UserProfile> {
+  var hisname;
+  var hisemail;
+  var histype;
+  var hisimage;
+
+  var myname;
+  var myemail;
+  var mytype;
+  var myimage;
+
+  ///
+  getHisData() {
+    Future<DocumentSnapshot> user =
+        FirebaseFirestore.instance.collection('Users').doc(widget.id).get();
+
+    user.then((DocumentSnapshot userSnapshot) => {
+          hisdata(userSnapshot['name'], userSnapshot['email'],
+              userSnapshot['status'], userSnapshot['photoUrl']),
+        });
+  }
+
+  hisdata(n, e, t, i) {
+    setState(() {
+      hisname = n;
+      hisemail = e;
+      histype = t;
+      hisimage = i;
+    });
+  }
+
+  getMyData() {
+    Future<DocumentSnapshot> user = FirebaseFirestore.instance
+        .collection('Users')
+        .doc(myid.loggedInUser.uid)
+        .get();
+
+    user.then((DocumentSnapshot userSnapshot) => {
+          mydata(userSnapshot['name'], userSnapshot['email'],
+              userSnapshot['status'], userSnapshot['photoUrl']),
+        });
+  }
+
+  mydata(n, e, t, i) {
+    setState(() {
+      myname = n;
+      myemail = e;
+      mytype = t;
+      myimage = i;
+    });
+  }
+
+  ///
+
+  myChatRooms() {
+    FirebaseFirestore.instance
+        .collection('Users')
+        .doc(myid.loggedInUser.uid)
+        .collection('chats')
+        .doc(widget.id)
+        .set({
+      'id': widget.id,
+      'email': hisemail,
+      'name': hisname,
+      'status': histype,
+      'image': hisimage,
+      'newMessage': false,
+      'last': '${DateTime.now().millisecondsSinceEpoch}',
+    });
+  }
+
+  hisChatRooms() {
+    FirebaseFirestore.instance
+        .collection('Users')
+        .doc(widget.id)
+        .collection('chats')
+        .doc(myid.loggedInUser.uid)
+        .set({
+      'id': myid.loggedInUser.uid,
+      'email': myemail,
+      'name': myname,
+      'status': mytype,
+      'image': myimage,
+      'newMessage': false,
+      'last': '${DateTime.now().millisecondsSinceEpoch}',
+    });
+  }
+
+  navigateToMap() {
+    Navigator.of(context).push(SlidePosition(
+        page: StaticMap(widget.latitude, widget.longitude), x: -1.0));
+  }
+
+  navigateToChat() {
+    Navigator.of(context).push(SlidePosition(
+        page: MyChat(myid.loggedInUser.uid, myid.loggedInUser.email, widget.id,
+            widget.hisname, hisimage, false),
+        x: 1.0));
+  }
+
+  var checkUnWanted;
+  @override
+  void initState() {
+    super.initState();
+    getHisData();
+    getMyData();
+    setState(() {
+      checkUnWanted =
+          UnWantedController.checkUnwanted(myid.loggedInUser.uid, widget.id);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              widget.hisname,
+              style:TextStyle(
+                fontSize: MediaQuery.of(context).size.width * 0.056,
+              ),
+            ),
+            backgroundColor: Colors.black,
+          ),
+          floatingActionButton: Stack(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.085,),
+                child: Align(
+                  alignment: Alignment.bottomLeft,
+                  child: FloatingActionButton(
+                    backgroundColor: Colors.black,
+                    child: Icon(Icons.location_on, color: Colors.white),
+                    heroTag: 'button1',
+                    onPressed: () async {
+                      if (await checkUnWanted == false) {
+                        navigateToMap();
+                      } else {
+                        unWantedDialog(context, 1);
+                      }
+                    },
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.085,),
+                child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: FloatingActionButton(
+                    backgroundColor: Colors.black,
+                    child: Icon(Icons.message),
+                    heroTag: 'button2',
+                    onPressed: () async {
+                      if (await checkUnWanted == false) {
+                        myChatRooms();
+                        hisChatRooms();
+                        navigateToChat();
+                      } else {
+                        unWantedDialog(context, 2);
+                      }
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
+          body: ListView(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: MediaQuery.of(context).size.width * 0.05),
+                child: Column(
+                  children: <Widget>[
+                    StreamBuilder(
+                        stream: FirebaseFirestore.instance
+                            .collection('Users')
+                            .doc(widget.id)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError) {
+                            return Text('Something went wrong');
+                          }
+
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(child: CircularProgressIndicator());
+                          }
+
+                          if (!snapshot.hasData) {
+                            return Text('');
+                          }
+                          double rate;
+                          int usersRatedMe = snapshot.data['numUsersRatedMe'];
+                          if (usersRatedMe == 0) {
+                            rate = 0.0;
+                          } else {
+                            rate = snapshot.data['userStars'] /
+                                snapshot.data['numUsersRatedMe'];
+                          }
+                          String name = snapshot.data['name'];
+                          String email = snapshot.data['email'];
+                          String about = snapshot.data['about'];
+                          String photo = snapshot.data['photoUrl'];
+                          Timestamp time = snapshot.data['timeCreation'];
+                          String timeCreation =
+                              DateFormat("dd/MM/yyyy").format(time.toDate());
+                          String age = snapshot.data['age'];
+                          String gender = snapshot.data['gender'];
+
+                          return Column(
+                            children: <Widget>[
+                              photo.length == 0
+                                  ? GestureDetector(
+                                      child: Hero(
+                                        transitionOnUserGestures: true,
+                                        tag: 'defHero',
+                                        child: CircleAvatar(
+                                          backgroundColor: Colors.transparent,
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              image: DecorationImage(
+                                                fit: BoxFit.fill,
+                                                image: AssetImage(
+                                                    'assets/defProfile.jpg'),
+                                              ),
+                                            ),
+                                          ),
+                                          radius: MediaQuery.of(context).size.width * 0.28,
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(builder: (_) {
+                                          return DefHero();
+                                        }));
+                                      })
+                                  : GestureDetector(
+                                      child: Hero(
+                                        transitionOnUserGestures: true,
+                                        tag: 'profileHero',
+                                        child: CircleAvatar(
+                                          backgroundColor: Colors.transparent,
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              image: DecorationImage(
+                                                fit: BoxFit.fill,
+                                                image:
+                                                    CachedNetworkImageProvider(
+                                                        photo),
+                                              ),
+                                            ),
+                                          ),
+                                          radius: MediaQuery.of(context).size.width * 0.28,
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(builder: (_) {
+                                          return ProfHero(photo);
+                                        }));
+                                      }),
+                              ProfileTile('Name', name, Icons.person),
+                              ProfileTile('Email', email, Icons.email),
+                              ProfileTile('About', about,
+                                  FlutterIcons.pencil_alt_faw5s),
+                              ProfileTile(
+                                'Rate',
+                                "${rate.toStringAsFixed(1)}/5 ($usersRatedMe)",
+                                Icons.star_half,
+                              ),
+                              ProfileTile(
+                                  'Age', age, FlutterIcons.birthday_cake_faw),
+                              ProfileTile('Gender', gender,
+                                  FlutterIcons.gender_male_mco),
+                              ProfileTile('Creation date', timeCreation,
+                                  Icons.access_time)
+                            ],
+                          );
+                        })
+                  ],
+                ),
+              ),
+            ],
+          )),
+    );
+  }
+}
+
+unWantedDialog(BuildContext context, int x) {
+  showDialog(
+      context: context,
+      builder: (context) {
+        Future.delayed(Duration(seconds: 3), () {
+          Navigator.of(context).pop(true);
+        });
+        return AlertDialog(
+          /*title: Text("",
+              style: TextStyle(color: Colors.red)),*/
+          content: x == 1
+              ? Text("You can't know this person's location")
+              : Text("You can't chat with this person"),
+        );
+      });
+}
+
+class PopUpMenuConstants {
+  static const String report = 'Report';
+  static const List<String> choices = <String>[
+    report,
+  ];
+}
+
+class DefHero extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: GestureDetector(
+        child: Center(
+          child: Hero(
+            tag: 'defHero',
+            child: Image.asset('assets/defProfile.jpg'),
+          ),
+        ),
+        onTap: () {
+          Navigator.pop(context);
+        },
+      ),
+    );
+  }
+}
+
+class ProfHero extends StatelessWidget {
+  final String prof;
+  ProfHero(this.prof);
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: GestureDetector(
+        child: Center(
+          child: Hero(
+            tag: 'profileHero',
+            child: CachedNetworkImage(imageUrl: prof),
+          ),
+        ),
+        onTap: () {
+          Navigator.pop(context);
+        },
+      ),
+    );
+  }
+}

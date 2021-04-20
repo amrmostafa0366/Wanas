@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "869915054780",
+    "project_id": "wanas-7af81",
+    "storage_bucket": "wanas-7af81.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:869915054780:android:a1788f0bb43e238512b6b9",
+        "android_client_info": {
+          "package_name": "com.example.wanas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "869915054780-i946hpakqkc4rfdheflg6tg61e8tjbi7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVdhLv-E8i8egmogcuLtxk9K6qtyE-bhg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "869915054780-i946hpakqkc4rfdheflg6tg61e8tjbi7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

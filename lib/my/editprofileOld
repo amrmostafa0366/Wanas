@@ -1,0 +1,271 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as p;
+//import 'package:wanas/my/myprofile.dart' as myid;
+import 'package:wanas/my/profile.dart' as myid;
+
+class EditProfile extends StatefulWidget {
+  @override
+  _EditProfileState createState() => _EditProfileState();
+}
+
+class _EditProfileState extends State<EditProfile> {
+  final _formKey = GlobalKey<FormState>();
+
+  String _currentName;
+  String _currentEmail;
+  String _currentAge;
+  String _currentGender;
+  String _currentAbout;
+  String _currentProfilePic;
+
+  File _image;
+  String _url;
+  //String img;
+
+  Future<void> updateProfile(
+      String name, String about, String age, String url) async {
+    FirebaseFirestore.instance
+        .collection('Users')
+        .doc(myid.loggedInUser.uid)
+        .update({
+      'name': name,
+      'about': about,
+      'age': age,
+      'photoUrl': url,
+    });
+  }
+
+  List<String> chatsIDs = [];
+  Future getMyChats() async {
+    var firestore = FirebaseFirestore.instance;
+
+    QuerySnapshot qn = await firestore
+        .collection('Users')
+        .doc(myid.loggedInUser.uid)
+        .collection('chats')
+        .get();
+
+    for (int i = 0; i < qn.docs.length; ++i) {
+      chatsIDs.add(qn.docs[i]['id']);
+    }
+  }
+
+  Future<void> updateMyProfileToOthers(String name, String url) async {
+    for (int i = 0; i < chatsIDs.length; ++i) {
+      FirebaseFirestore.instance
+          .collection('Users')
+          .doc(chatsIDs[i])
+          .collection('chats')
+          .where('id', isEqualTo: myid.loggedInUser.uid)
+          .get()
+          .then((snapshot) {
+        for (DocumentSnapshot ds in snapshot.docs) {
+          ds.reference.update({
+            'name': name,
+            'image': url,
+          });
+        }
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    getMyChats();
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: StreamBuilder(
+          stream: FirebaseFirestore.instance
+              .collection('Users')
+              .doc(myid.loggedInUser.uid)
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return //Text("Loading");
+                  Text('');
+            }
+            var userDocument = snapshot.data;
+            return ListView(children: [
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      'Edit your profile information',
+                      style: TextStyle(fontSize: 18.0),
+                    ),
+                    SizedBox(height: 20.0),
+                    Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              CircleAvatar(
+                                backgroundColor: Colors.grey[400],
+                                backgroundImage: /*userDocument['photoUrl'] == null */ _image ==
+                                        null
+                                    ? AssetImage('assets/defProfile.jpg')
+                                    // : NetworkImage(userDocument['photoUrl']),
+                                    : FileImage(_image),
+                                radius: 75,
+                              ),
+                            ],
+                          ),
+                          Padding(padding: EdgeInsets.all(10.0)),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              ButtonTheme(
+                                minWidth: 10.0,
+                                buttonColor: Colors.grey,
+                                child: Builder(
+                                  builder: (context) => RaisedButton(
+                                    onPressed: () {
+                                      pickImageCamera();
+                                    },
+                                    child: Icon(
+                                      Icons.camera_alt,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Padding(padding: EdgeInsets.all(2.0)),
+                              ButtonTheme(
+                                buttonColor: Colors.grey,
+                                minWidth: 10.0,
+                                child: RaisedButton(
+                                  onPressed: () {
+                                    pickImageGallary();
+                                  },
+                                  child: Icon(Icons.image),
+                                ),
+                              ),
+                              Padding(padding: EdgeInsets.all(2.0)),
+                              ButtonTheme(
+                                buttonColor: Colors.grey,
+                                minWidth: 10.0,
+                                child: Builder(
+                                  builder: (context) => RaisedButton(
+                                    onPressed: () {
+                                      uploadImage(context);
+                                    },
+                                    child: Icon(Icons.save),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    TextFormField(
+                      initialValue: userDocument['name'],
+                      // decoration: textInputDecoration,
+                      validator: (val) =>
+                          val.isEmpty ? 'Please enter your name' : null,
+                      onChanged: (val) => setState(() => _currentName = val),
+                    ),
+                    SizedBox(height: 20.0),
+                    TextFormField(
+                      initialValue: userDocument['about'],
+                      validator: (val) =>
+                          val.isEmpty ? 'Write something about yourself' : null,
+                      onChanged: (val) => setState(() => _currentAbout = val),
+                    ),
+                    SizedBox(height: 20.0),
+                    TextFormField(
+                      initialValue: userDocument['age'],
+                      validator: (val) =>
+                          val.isEmpty ? 'Please enter your age' : null,
+                      onChanged: (val) => setState(() => _currentAge = val),
+                    ),
+                    SizedBox(height: 10.0),
+                    RaisedButton(
+                        color: Colors.black,
+                        child: Text(
+                          'Update',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: () async {
+                          if (_formKey.currentState.validate()) {
+                            if (_currentName == null) {
+                              _currentName = userDocument['name'];
+                            }
+                            if (_currentAbout == null) {
+                              _currentAbout = userDocument['about'];
+                            }
+                            if (_currentAge == null) {
+                              _currentAge = userDocument['age'];
+                            }
+                            if (_url == null) {
+                              _url = userDocument['photoUrl'];
+                            }
+
+                            updateProfile(
+                                _currentName, _currentAbout, _currentAge, _url);
+
+                            updateMyProfileToOthers(_currentName, _url);
+                            Navigator.pop(context);
+                          }
+                        }),
+                  ],
+                ),
+              ),
+            ]);
+          }),
+    );
+  }
+
+  void pickImageCamera() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+
+    setState(() {
+      _image = image;
+    });
+  }
+
+  void pickImageGallary() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      _image = image;
+    });
+  }
+
+  void uploadImage(context) async {
+    try {
+      String fileName = p.basename(_image.path);
+      Reference firebaseStorageRef = FirebaseStorage.instance
+          .ref()
+          .child('profile/${myid.loggedInUser.uid}/$fileName');
+      UploadTask uploadTask = firebaseStorageRef.putFile(_image);
+      uploadTask.whenComplete(() async {
+        String url = await firebaseStorageRef.getDownloadURL();
+        print(url);
+        setState(() {
+          _url = url;
+          _currentProfilePic = url;
+        });
+        Scaffold.of(context).showSnackBar(SnackBar(
+          content: Text('success'),
+        ));
+      });
+    } catch (ex) {
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text(ex.message),
+      ));
+    }
+  }
+}

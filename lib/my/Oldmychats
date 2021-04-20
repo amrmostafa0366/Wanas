@@ -1,0 +1,270 @@
+
+///old myChats///
+////
+/*
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:wanas/my/menu.dart';
+import 'package:wanas/my/myprofile.dart' as lol;
+import 'package:wanas/my/mychat.dart';
+
+//final _auth = FirebaseAuth.instance;
+
+class MyChats extends StatefulWidget {
+  @override
+  _MyChatsState createState() => _MyChatsState();
+}
+
+class _MyChatsState extends State<MyChats> {
+  Future _data;
+
+  Future getMyChats() async {
+    var firestore = Firestore.instance;
+
+    QuerySnapshot qn = await firestore
+        .collection('Users')
+        .document(lol.loggedInUser.uid)
+        .collection('chats')
+        .getDocuments();
+    return qn.documents;
+  }
+
+  navigateToChat(String hisid, String hisname, String hisimage) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                MyChat(lol.loggedInUser.uid, hisid, hisname, hisimage)));
+  }
+
+/*
+  String myid;
+  getCurrentUser() async {
+    try {
+      final user = await _auth.currentUser();
+      if (user != null) {
+        setState(() {
+          loggedInUser = user;
+          myid = loggedInUser.uid;
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+*/
+/*
+  var hisname;
+  var hisemail;
+  var histype;
+  var hisimage;
+
+  var myname;
+  var myemail;
+  var mytype;
+  var myimage;
+
+  var hid;
+  getHisData(hisid) {
+    Future<DocumentSnapshot> user =
+        Firestore.instance.collection('Users').document(hisid).get();
+
+    user.then((DocumentSnapshot userSnapshot) => {
+          hisdata(userSnapshot['name'], userSnapshot['email'],
+              userSnapshot['type'], userSnapshot['photoUrl']),
+        });
+
+    setState(() {
+      hid = hisid;
+    });
+  }
+
+  hisdata(n, e, t, i) {
+    setState(() {
+      hisname = n;
+      hisemail = e;
+      histype = t;
+      hisimage = i;
+    });
+  }
+/*
+    getHisType(String id) {
+    Future<DocumentSnapshot> user =
+        Firestore.instance.collection('Users').document(id).get();
+
+    user.then((DocumentSnapshot userSnapshot) => {
+          hisType(
+              userSnapshot['type'],),
+        });
+  
+    }
+  hisType(t) {
+    setState(() {
+      typ = t;
+    });
+  }
+  */
+  ///
+  ///
+  /////////
+  ///
+
+  //////
+
+  getMyData() {
+    Future<DocumentSnapshot> user = Firestore.instance
+        .collection('Users')
+        .document(lol.loggedInUser.uid)
+        .get();
+
+    user.then((DocumentSnapshot userSnapshot) => {
+          mydata(userSnapshot['name'], userSnapshot['email'],
+              userSnapshot['type'], userSnapshot['photoUrl']),
+        });
+  }
+
+  mydata(n, e, t, i) {
+    setState(() {
+      myname = n;
+      myemail = e;
+      mytype = t;
+      myimage = i;
+    });
+  }
+
+  ///
+
+  myChatRooms() {
+    Firestore.instance
+        .collection('Users')
+        .document(lol.loggedInUser.uid)
+        .collection('chats')
+        .document(hid)
+        .setData({
+      'id': hid,
+      'email': hisemail,
+      'name': hisname,
+      'type': histype,
+      'image': hisimage,
+    });
+  }
+
+  hisChatRooms() {
+    Firestore.instance
+        .collection('Users')
+        .document(hid)
+        .collection('chats')
+        .document(lol.loggedInUser.uid)
+        .setData({
+      'id': lol.loggedInUser.uid,
+      'email': myemail,
+      'name': myname,
+      'type': mytype,
+      'image': myimage,
+    });
+  }
+*/
+  @override
+  void initState() {
+    super.initState();
+    //  getCurrentUser().whenComplete(() {
+    _data = getMyChats();
+    //  });
+    //_data = getMyChats();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      drawer: Menu(),
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: Text('Chats'),
+      ),
+      body: RefreshIndicator(
+        onRefresh: () {
+          setState(() {
+            _data = getMyChats();
+          });
+          return _data;
+        },
+        child: Container(
+          child: FutureBuilder(
+              future: _data,
+              builder: (_, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                      // child: Text('Loading...'),
+                      // child: Text(''),
+                      child: CircularProgressIndicator());
+                } else {
+                  return ListView.builder(
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (_, index) {
+                        return ListTile(
+                            leading: CircleAvatar(
+                                backgroundColor: Colors.transparent,
+                                backgroundImage: snapshot
+                                            .data[index].data['image'] ==
+                                        ''
+                                    ? AssetImage(
+                                        'assets/defProfile.jpg')
+                                    : NetworkImage(snapshot.data[index].data[
+                                        'image'])), // no matter how big it is, it won't overflow
+                            title: Text(
+                              snapshot.data[index].data['name'],
+                              style: TextStyle(
+                                fontSize: 28,
+                                fontFamily: 'Bangers',
+                              ),
+                            ),
+                            /* subtitle: StreamBuilder(
+                              stream: Firestore.instance
+                                  .collection('Users')
+                                  .document(lol.loggedInUser.uid)
+                                  .collection('chats')
+                                  .document(snapshot.data[index].data['id'])
+                                  .snapshots(),
+                              builder: (context, snapshot) {
+                                if (!snapshot.hasData ||
+                                    snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                  /* return Center(
+                              child: CircularProgressIndicator(),
+                            );  */
+                                  return Text('');
+                                }
+                                String status = snapshot.data['type'];
+                                return Text(
+                                  status,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                              .04),
+                                );
+                              }), */
+
+                            onTap: () {
+                             /* getHisData(snapshot.data[index].data['id']);
+                              getMyData();
+                              myChatRooms();
+                              hisChatRooms(); */
+
+                              navigateToChat(
+                                snapshot.data[index].data['id'],
+                                snapshot.data[index].data['name'],
+                                snapshot.data[index].data['image'],
+                              );
+                            });
+                      });
+                }
+              }),
+        ),
+      ),
+    );
+  }
+}
+
+*/
