@@ -15,7 +15,7 @@ class _BlockListState extends State<BlockList> {
       .collection('Users')
       .doc(myid.loggedInUser.uid)
       .collection('UsersIBlocked')
-      .orderBy('time', descending: true);
+      .orderBy('date', descending: true);
 
   unBlockDialog(
     BuildContext context,
@@ -96,6 +96,7 @@ class _BlockListState extends State<BlockList> {
               itemBuilder: (_, index) {
                 return ListTile(
                   leading: CircleAvatar(
+                    radius: MediaQuery.of(context).size.width * 0.06,
                     backgroundColor: Colors.transparent,
                     backgroundImage: snapshot.data.docs[index]['image'] == ''
                         ? AssetImage('assets/defProfile.jpg')
@@ -105,13 +106,17 @@ class _BlockListState extends State<BlockList> {
                   title: Text(
                     snapshot.data.docs[index]['name'],
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: MediaQuery.of(context).size.width * 0.05,
                       fontFamily: 'YuseiMagic',
                     ),
                   ),
                   trailing: FlatButton(
                     child:
-                        Text('Unblock', style: TextStyle(color: Colors.white)),
+                        Text('Unblock',
+                         style: TextStyle(
+                          color: Colors.white,
+                        fontSize: MediaQuery.of(context).size.width * 0.04,
+                        )),
                     color: Colors.red,
                     onPressed: () {
                       unBlockDialog(context, snapshot.data.docs[index]['id']);
