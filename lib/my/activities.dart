@@ -32,21 +32,10 @@ class _ActivitiesState extends State<Activities> {
     });
 
     final locData = await Location().getLocation();
-   // print(locData.latitude);
-   // print(locData.longitude);
     updateLocation(locData.latitude, locData.longitude);
 
-    /*
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                Activity
-                (activity, locData.latitude, locData.longitude)));
-                */
     Navigator.of(context).push(SlidePosition(
         page: Activity(activity, locData.latitude, locData.longitude),x: 1.0));
-       // page: Testo(activity, locData.latitude, locData.longitude)));
   }
 
   Future<void> updateLocation(lat, long) async {
@@ -109,15 +98,11 @@ class _ActivitiesState extends State<Activities> {
                             child: CachedNetworkImage(
                                 imageUrl: snapshot.data[index]['image']),
                           ),
-                          /*  leading: CircleAvatar(
-                      backgroundImage: NetworkImage(snapshot.data[index].data['image']), // no matter how big it is, it won't overflow
-                    ), */
                           title: Text(snapshot.data[index]['name'],
                               style: TextStyle(
                                 fontSize: MediaQuery.of(context).size.width * 0.078,
                                 fontFamily: 'Bangers',
                               )),
-                          //    subtitle:Text(snapshot.data[index].data['email']),
                           onTap: () =>
                               updateActivity(snapshot.data[index]['name']),
                         );

@@ -2,7 +2,8 @@ import 'package:wanas/UserStatus/LoginStatus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wanas/helper/helper.dart';
-import 'package:wanas/my/myprofile.dart';
+import 'package:wanas/my/profile.dart';
+//import 'package:wanas/my/myprofile.dart';
 import 'package:wanas/my/register.dart';
 
 class Login extends StatefulWidget {
@@ -100,7 +101,7 @@ class _LoginState extends State<Login> {
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => MyProfile()));
+                                        builder: (context) => Profile()));
                               }
                             } catch (e) {
                               setState(() {

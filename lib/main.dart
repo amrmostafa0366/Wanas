@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:wanas/UserStatus/LoginStatus.dart';
 import 'package:flutter/services.dart';
-import 'package:wanas/my/myprofile.dart';
+//import 'package:wanas/my/myprofile.dart';
 import 'package:wanas/my/profile.dart';
 import 'package:wanas/my/welcome.dart';
 

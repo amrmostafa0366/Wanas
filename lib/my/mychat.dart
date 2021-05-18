@@ -18,8 +18,8 @@ class MyChat extends StatefulWidget {
   final String hisimage;
   final bool uWu;
 
-  MyChat(this.currentUserId, this.currentUserEmail, this.peerUserId, this.hisname,
-      this.hisimage, this.uWu);
+  MyChat(this.currentUserId, this.currentUserEmail, this.peerUserId,
+      this.hisname, this.hisimage, this.uWu);
 
   @override
   _MyChatState createState() => _MyChatState();
@@ -61,13 +61,18 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
   ];
   String _currentReport = 'Report reason';
   final _formkey = GlobalKey<FormState>();
+
   ////////////////////////////////////////////////////////
+
   reportDialog(BuildContext context) {
     // set up the buttons
     Widget cancel = FlatButton(
       child: Text(
         "Cancel",
-        style: TextStyle(color: Colors.black),
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: MediaQuery.of(context).size.width * 0.045,
+        ),
       ),
       onPressed: () {
         Navigator.pop(context);
@@ -76,7 +81,10 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
     Widget yes = FlatButton(
       child: Text(
         "Yes",
-        style: TextStyle(color: Colors.black),
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: MediaQuery.of(context).size.width * 0.045,
+        ),
       ),
       onPressed: () async {
         if (_formkey.currentState.validate()) {
@@ -99,12 +107,13 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
                         style: TextStyle(color: Colors.green)),
                   );
                 }).whenComplete(() {
-              Navigator.of(context).pushReplacement(SlidePosition(page: MyChats(),x: -1.0));
+              Navigator.of(context)
+                  .pushReplacement(SlidePosition(page: MyChats(), x: -1.0));
             });
 
-           // print('reported successfully!');
+            // print('reported successfully!');
           } else {
-          //  print('$checkreported' + '3');
+            //  print('$checkreported' + '3');
           }
         }
       },
@@ -112,7 +121,12 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("Report"),
+      title: Text(
+        "Report",
+        style: TextStyle(
+          fontSize: MediaQuery.of(context).size.width * 0.06,
+        ),
+      ),
       content: Form(
         key: _formkey,
         child: DropdownButtonFormField(
@@ -122,7 +136,10 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
                 value: report,
                 child: Text(
                   report,
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: MediaQuery.of(context).size.width * 0.045,
+                  ),
                 ),
               );
             }).toList(),
@@ -157,7 +174,10 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
     Widget no = FlatButton(
       child: Text(
         "No",
-        style: TextStyle(color: Colors.black),
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: MediaQuery.of(context).size.width * 0.045,
+        ),
       ),
       onPressed: () {
         Navigator.pop(context);
@@ -166,7 +186,10 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
     Widget yes = FlatButton(
       child: Text(
         "Yes",
-        style: TextStyle(color: Colors.black),
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: MediaQuery.of(context).size.width * 0.045,
+        ),
       ),
       onPressed: () {
         ChatController.clearChat(widget.currentUserId, widget.peerUserId);
@@ -176,8 +199,16 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("Clear?"),
-      content: Text("Are you sure you want to clear this chat?"),
+      title: Text(
+        "Clear?",
+        style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06),
+      ),
+      content: Text(
+        "Are you sure you want to clear this chat?",
+        style: TextStyle(
+          fontSize: MediaQuery.of(context).size.width * 0.045,
+        ),
+      ),
       actions: [
         no,
         yes,
@@ -199,7 +230,10 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
     Widget no = FlatButton(
       child: Text(
         "No",
-        style: TextStyle(color: Colors.black),
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: MediaQuery.of(context).size.width * 0.045,
+        ),
       ),
       onPressed: () {
         Navigator.pop(context);
@@ -208,18 +242,30 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
     Widget yes = FlatButton(
       child: Text(
         "Yes",
-        style: TextStyle(color: Colors.black),
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: MediaQuery.of(context).size.width * 0.045,
+        ),
       ),
       onPressed: () {
         ChatController.deleteChat(widget.currentUserId, widget.peerUserId);
-        Navigator.of(context).pushReplacement(SlidePosition(page: MyChats(),x:-1.0));
+        Navigator.of(context)
+            .pushReplacement(SlidePosition(page: MyChats(), x: -1.0));
       },
     );
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("Delete?"),
-      content: Text("Are you sure you want to delete this chat?"),
+      title: Text(
+        "Delete?",
+        style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06),
+      ),
+      content: Text(
+        "Are you sure you want to delete this chat?",
+        style: TextStyle(
+          fontSize: MediaQuery.of(context).size.width * 0.045,
+        ),
+      ),
       actions: [
         no,
         yes,
@@ -250,19 +296,31 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
     Widget yes = FlatButton(
       child: Text(
         "Yes",
-        style: TextStyle(color: Colors.black),
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: MediaQuery.of(context).size.width * 0.045,
+        ),
       ),
       onPressed: () {
         ChatController.block(widget.currentUserId, widget.peerUserId,
             widget.hisname, widget.hisimage);
-        Navigator.of(context).pushReplacement(SlidePosition(page: MyChats(),x: -1.0));
+        Navigator.of(context)
+            .pushReplacement(SlidePosition(page: MyChats(), x: -1.0));
       },
     );
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("Block?"),
-      content: Text("Are you sure you want to block this user?"),
+      title: Text(
+        "Block?",
+        style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06),
+      ),
+      content: Text(
+        "Are you sure you want to block this user?",
+        style: TextStyle(
+          fontSize: MediaQuery.of(context).size.width * 0.045,
+        ),
+      ),
       actions: [
         no,
         yes,
@@ -286,8 +344,11 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
       print('View Profile');
 
       Navigator.of(context)
-         // .push(SlidePosition(page: ViewProfile(widget.peerUserId, widget.name),x: 1.0));
-            .push(SlidePosition(page: Profile(number:2,hisid:widget.peerUserId,hisname:widget.hisname),x: 1.0));
+          // .push(SlidePosition(page: ViewProfile(widget.peerUserId, widget.name),x: 1.0));
+          .push(SlidePosition(
+              page: Profile(
+                  number: 2, hisid: widget.peerUserId, hisname: widget.hisname),
+              x: 1.0));
     } else if (choice == PopUpMenuConstants.clearChat) {
       print('Clear chat');
       clearChatDialog(context);
@@ -348,7 +409,7 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
             children: [
               Expanded(
                 child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    //mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -366,28 +427,41 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
                               .snapshots(),
                           builder: (context, snapshot) {
                             if (!snapshot.hasData) {
-                              return Text('');
-                            } else if (snapshot.connectionState ==
+                              return Text('',style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            .04),);
+                            }if (snapshot.data['status']==null) {
+                              return Text('',style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            .04),);
+                            } 
+                             else if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              /* return Center(
-                                    child: CircularProgressIndicator(),
-                                  );  */
-                              return Text(snapshot.data['status'],
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize:
-                                          MediaQuery.of(context).size.width *
-                                              .04));
-                            }
-                            String status = snapshot.data['status'];
+                                  //need to be optimized..
+                              return Text(
+                                snapshot.data['status'],
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            .04),
+                              );
+                            } else {
+                              String status = snapshot.data['status'];
 
-                            return Text(
-                              status,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize:
-                                      MediaQuery.of(context).size.width * .04),
-                            );
+                              return Text(
+                                status,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            .04),
+                              );
+                            }
                           })
                     ]),
               ),
@@ -399,16 +473,14 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             MessagesStream(widget.currentUserId, widget.peerUserId),
-            textFieldOr(/*checkBar*/),
+            textFieldOr(),
           ],
         ),
       ),
     );
   }
 
-  textFieldOr(/*bool checkBar*/) {
-    //var unWanted = false;
-    // unWanted = UnWantedController.checkUnwanted(myid,hisid);
+  textFieldOr() {
     print(widget.uWu);
     if (widget.uWu == true) {
       return cantChat();
@@ -480,9 +552,15 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
               minLines: 1,
               maxLines: 4,
               textCapitalization: TextCapitalization.sentences,
-              style:
-                  TextStyle(fontSize: MediaQuery.of(context).size.width * .05),
+              style:TextStyle(fontSize: MediaQuery.of(context).size.width * .05),
               keyboardType: TextInputType.multiline,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.symmetric(
+                    vertical: MediaQuery.of(context).size.height * .02,
+                    horizontal: MediaQuery.of(context).size.width * .05),
+                hintText: 'Type a message...',
+                border: InputBorder.none,
+              ),
               controller: messageTextController,
               onChanged: (value) {
                 messageText = value;
@@ -494,13 +572,7 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
                       widget.peerUserId, widget.currentUserId, 'typing...');
                 }
               },
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.symmetric(
-                    vertical: MediaQuery.of(context).size.width * .02,
-                    horizontal: MediaQuery.of(context).size.width * .05),
-                hintText: 'Type a message...',
-                border: InputBorder.none,
-              ),
+              
             ),
           ),
 
@@ -521,12 +593,12 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
                       widget.currentUserId,
                       widget.currentUserEmail,
                       widget.peerUserId,
-                      messageText,
-                      Timestamp.now()
-                      );
+                      messageText);
+                     // Timestamp.now());
                   ChatController.updateLast(
                       widget.peerUserId, widget.currentUserId);
-                  ChatController.updateNewMessage(widget.peerUserId,widget.currentUserId);
+                  ChatController.updateNewMessage(
+                      widget.peerUserId, widget.currentUserId);
                   messageText = '';
                 }
               },
@@ -540,6 +612,7 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
       ),
     );
   }
+
 //not efficient
   getTime() async {
     http.Response response =
@@ -565,4 +638,3 @@ class PopUpMenuConstants {
     block
   ];
 }
-

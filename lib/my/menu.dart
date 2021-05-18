@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:wanas/UserStatus/LoginStatus.dart';
+import 'package:wanas/UserStatus/checkConnection.dart';
 import 'package:wanas/helper/helper.dart';
 import 'package:wanas/main.dart';
 import 'package:wanas/my/activities.dart';
@@ -13,6 +14,7 @@ import 'package:wanas/my/mychats.dart';
 //import 'package:wanas/my/myprofile.dart' as myid;
 import 'package:wanas/my/profile.dart' as myid;
 import 'package:wanas/my/rates.dart';
+import 'package:wanas/my/testo.dart';
 
 class Menu extends StatefulWidget {
   @override
@@ -321,6 +323,10 @@ class _MenuState extends State<Menu> {
                 ),
                 ),
                 onTap: () async {
+                  var connection = checkConnection();
+                  connection = await connection;
+                  if(connection == true){
+                    
                   setState(() {
                     profileTile =
                         activitiesTile = chatsTile = helpTile = ratingTile = 0;
@@ -345,9 +351,10 @@ class _MenuState extends State<Menu> {
 
                     /*  Navigator.of(context).pushAndRemoveUntil(
               SlidePosition(page: MyApp(), x: -1.0),(route) => false,);*/
+                  }
                 },
               ),
-              /*
+              
               ListTile(
                 leading: Icon(
                   FlutterIcons.setting_ant,
@@ -357,10 +364,10 @@ class _MenuState extends State<Menu> {
                 title: Text('Test profile'),
                 onTap: () {
                   Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => myid.Profile()));
+                      MaterialPageRoute(builder: (context) => Testo()));
                 },
               ),
-              */
+              
             ],
           ),
         ),

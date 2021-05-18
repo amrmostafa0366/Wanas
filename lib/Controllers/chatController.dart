@@ -8,7 +8,7 @@ class ChatController extends StatefulWidget {
 //////////////////////////////////////////////////////////////////////////////////
   ///SEND MSG
 
-  static void sendMessage(String id1, String email1, String id2, String msg, time) async{
+  static void sendMessage(String id1, String email1, String id2, String msg) async{
     //for me
 
    await FirebaseFirestore.instance
@@ -17,11 +17,11 @@ class ChatController extends StatefulWidget {
         .collection('chats')
         .doc(id2)
         .collection('messages')
-        .doc('$time')//
+        .doc('${DateTime.now()}')//
         .set({
       'message': msg,
       'sender': email1,
-      'time':time,
+      'date':DateTime.now(),
     });
     //for him
    await FirebaseFirestore.instance
@@ -30,11 +30,11 @@ class ChatController extends StatefulWidget {
         .collection('chats')
         .doc(id1)
         .collection('messages')
-        .doc('$time')//
+        .doc('${DateTime.now()}')//
         .set({
       'message': msg,
       'sender': email1,
-      'time':time,
+      'date':DateTime.now(),
     });
   }
 
@@ -122,7 +122,6 @@ static void updateNewMessage(String hisid, String myid) {
       'name': hisname,
       'image': hisimage,
       'date': DateTime.now(),
-      'time': DateTime.now().millisecondsSinceEpoch
     });
 
     await FirebaseFirestore.instance
@@ -133,7 +132,6 @@ static void updateNewMessage(String hisid, String myid) {
         .set({
       'id': myid,
       'date': DateTime.now(),
-      'time': DateTime.now().millisecondsSinceEpoch
     });
 
     await FirebaseFirestore.instance
@@ -177,46 +175,7 @@ static void updateNewMessage(String hisid, String myid) {
 ///REPORT
   static Future<void> report(
       String myid, String hisid, String _currentReport) async {
-   // var myreportList;
-   // var hisreportList;
     int reportsCounter = 0;
-
-//my reportList
-   /* await FirebaseFirestore.instance
-        .collection('Users')
-        .doc(myid)
-        .get()
-        .then((DocumentSnapshot userSnapshot) {
-      myreportList = userSnapshot['reportList'];
-    });
-    myreportList.add(hisid);
-
-    FirebaseFirestore.instance
-        .collection('Users')
-        .doc(myid)
-        .update({'reportList': myreportList});*/
-//his report list
-   /* await FirebaseFirestore.instance
-        .collection('Users')
-        .doc(hisid)
-        .get()
-        .then((DocumentSnapshot userSnapshot) {
-      hisreportList = userSnapshot['reportList'];
-    });
-    hisreportList.add(myid);
-
-    FirebaseFirestore.instance
-        .collection('Users')
-        .doc(hisid)
-        .update({'reportList': hisreportList});
-
-    FirebaseFirestore.instance
-        .collection('Users')
-        .doc(hisid)
-        .get()
-        .then((DocumentSnapshot ds) {
-      reportsCounter = ds.data()['reportsCounter'];
-    });*/
 
     FirebaseFirestore.instance
         .collection('Users')
@@ -226,7 +185,6 @@ static void updateNewMessage(String hisid, String myid) {
         .set({
       'reason': _currentReport,
       'id': myid,
-      'time': DateTime.now().millisecondsSinceEpoch,
       'date': DateTime.now(),
     });
 
@@ -238,7 +196,6 @@ static void updateNewMessage(String hisid, String myid) {
         .set({
       'reason': _currentReport,
       'id': hisid,
-      'time': DateTime.now().millisecondsSinceEpoch,
       'date': DateTime.now(),
     });
 

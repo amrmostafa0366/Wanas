@@ -500,7 +500,7 @@ class _ProfileState extends State<Profile> {
                                       ),
                                       radius:
                                           MediaQuery.of(context).size.width *
-                                              0.28,
+                                              0.25,
                                     ),
                                   ),
                                   onTap: () {
@@ -536,8 +536,31 @@ class _ProfileState extends State<Profile> {
                                       return HeroProfile(
                                           photo: photo, number: widget.number);
                                     }));
-                                  }),
-                          ProfileTile('Name', name, Icons.person),
+                                   }),
+                                  SizedBox(height: MediaQuery.of(context).size.height * .025),
+                                  Text(
+                                    name,
+                                    style:TextStyle(
+                                      fontSize: MediaQuery.of(context).size.width * 0.062,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  /*Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                    rate.toStringAsFixed(1),
+                                    style:TextStyle(
+                                      fontSize: MediaQuery.of(context).size.width * 0.040,
+                                      //fontWeight: FontWeight.bold,
+                                    ),
+                                   ),
+                                   Icon(Icons.star,size:MediaQuery.of(context).size.width * 0.065, color:Colors.yellow)
+                                    ],
+                                  ),
+                                  */
+                                  SizedBox(height: MediaQuery.of(context).size.height * .025),
+                        //  ProfileTile('Name', name, Icons.person),
                           ProfileTile('Email', email, Icons.email),
                           ProfileTile(
                               'Bio', about, FlutterIcons.pencil_alt_faw5s),

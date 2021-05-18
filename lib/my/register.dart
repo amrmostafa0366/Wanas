@@ -3,7 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wanas/my/login.dart';
-import 'package:wanas/my/myprofile.dart';
+//import 'package:wanas/my/myprofile.dart';
+import 'package:wanas/my/profile.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -342,7 +343,7 @@ class _RegisterState extends State<Register> {
                                   Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => MyProfile()));
+                                          builder: (context) => Profile()));
                                 }
                               } catch (e) {
                           setState(() {
