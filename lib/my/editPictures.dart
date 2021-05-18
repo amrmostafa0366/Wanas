@@ -10,12 +10,14 @@ import 'package:wanas/my/animation.dart';
 import 'package:path/path.dart' as p;
 import 'package:wanas/my/profile.dart' as myid;
 
-class EditProfilePicture extends StatefulWidget {
+class EditPictures extends StatefulWidget {
+  final int number;
+  EditPictures(this.number);
   @override
-  _EditProfilePictureState createState() => _EditProfilePictureState();
+  _EditPicturesState createState() => _EditPicturesState();
 }
 
-class _EditProfilePictureState extends State<EditProfilePicture> {
+class _EditPicturesState extends State<EditPictures> {
   var _image;
 
   @override
@@ -95,7 +97,7 @@ class _EditProfilePictureState extends State<EditProfilePicture> {
     );
   }
 
-  pickImageCompressed(var type) async {
+ /* pickImageCompressed(var type) async {
     ImagePicker imagePicker = ImagePicker();
     PickedFile compressedImage = await imagePicker.getImage(
       source: type,
@@ -104,7 +106,7 @@ class _EditProfilePictureState extends State<EditProfilePicture> {
     setState(() {
       _image = compressedImage;
     });
-  }
+  }*/
 
   void pickImageCamera() async {
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
@@ -114,7 +116,7 @@ class _EditProfilePictureState extends State<EditProfilePicture> {
     });
     if (_image != null)
       Navigator.of(context).pushReplacement(
-          SlidePosition(page: UploadProfilePicture(image:_image), x: 1.0));
+          SlidePosition(page: UploadProfilePicture(image:_image,number:widget.number), x: 1.0));
   }
 
   void pickImageGallary() async {
@@ -125,23 +127,34 @@ class _EditProfilePictureState extends State<EditProfilePicture> {
     });
     if (_image != null)
       Navigator.of(context).pushReplacement(
-          SlidePosition(page: UploadProfilePicture(image:_image), x: 1.0));
+          SlidePosition(page: UploadProfilePicture(image:_image,number:widget.number), x: 1.0));
   }
 
   removePic() {
-    FirebaseFirestore.instance
+    if(widget.number==1){
+        FirebaseFirestore.instance
         .collection('Users')
         .doc(myid.loggedInUser.uid)
         .update({
-      'photoUrl': '',
+      'profilePicture': '',
     });
     UploadProfilePicture().updateMyProfilePictureToOthers('');
+     }
+     else if(widget.number==2){
+        FirebaseFirestore.instance
+        .collection('Users')
+        .doc(myid.loggedInUser.uid)
+        .update({
+      'coverPicture': '',
+        });
+     }
   }
 }
 
 class UploadProfilePicture extends StatefulWidget {
   final File image;
-  UploadProfilePicture({this.image});
+  final int number;
+  UploadProfilePicture({this.image,this.number});
   @override
   _UploadProfilePictureState createState() => _UploadProfilePictureState();
 
@@ -248,7 +261,9 @@ class _UploadProfilePictureState extends State<UploadProfilePicture> {
           _url = url;
         });
         updateProfilePicture(_url);
+        if(widget.number==1){
         UploadProfilePicture().updateMyProfilePictureToOthers(_url);
+        }
         Navigator.of(context).pushAndRemoveUntil(
           SlidePosition(page: myid.Profile(), x: -1.0),
           (route) => false,
@@ -262,60 +277,21 @@ class _UploadProfilePictureState extends State<UploadProfilePicture> {
   }
 
   Future<void> updateProfilePicture(String url) async {
-    FirebaseFirestore.instance
+    if(widget.number==1){
+      FirebaseFirestore.instance
         .collection('Users')
         .doc(myid.loggedInUser.uid)
         .update({
-      'photoUrl': url,
+      'profilePicture': url,
     });
+    }
+    else if (widget.number==2){
+      FirebaseFirestore.instance
+        .collection('Users')
+        .doc(myid.loggedInUser.uid)
+        .update({
+      'coverPicture': url,
+    });
+    }
   }
 }
-
-/*
-
- Column(
-        children: [
-          Container(
-                color:Colors.red,
-                height:MediaQuery.of(context).size.height *0.4 ,
-                width:MediaQuery.of(context).size.width *1.0,
-                child: Image.file(widget.image),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    FlatButton(
-                      color: Colors.black,
-                          child: Text(
-                            'Cancel',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: MediaQuery.of(context).size.width * .045,
-                            ),
-                          ),
-                      onPressed: () {
-                        Navigator.of(context).pushAndRemoveUntil(
-                          SlidePosition(page: myid.Profile(), x: -1.0),
-                          (route) => false,
-                        );
-                      },
-                    ),
-                    FlatButton(
-                      color: Colors.black,
-                          child: Text(
-                            'Done',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: MediaQuery.of(context).size.width * .045,
-                            ),
-                          ),
-                      onPressed: () {
-                        uploadImage(context);
-                      },
-                    ),
-                  ],
-            ),
-        ],
-      ),
-
- */

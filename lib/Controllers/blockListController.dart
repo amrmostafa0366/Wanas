@@ -51,7 +51,7 @@ class BlockListController extends StatefulWidget {
               _data[0]=userSnapshot['email'];
               _data[1]=userSnapshot['name'];
               _data[2]=userSnapshot['status'];
-              _data[3]=userSnapshot['photoUrl'];
+              _data[3]=userSnapshot['profilePicture'];
         });
 
         /*print(_data[0]+

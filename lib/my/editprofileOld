@@ -36,7 +36,7 @@ class _EditProfileState extends State<EditProfile> {
       'name': name,
       'about': about,
       'age': age,
-      'photoUrl': url,
+      'profilePicture': url,
     });
   }
 
@@ -114,10 +114,10 @@ class _EditProfileState extends State<EditProfile> {
                             children: <Widget>[
                               CircleAvatar(
                                 backgroundColor: Colors.grey[400],
-                                backgroundImage: /*userDocument['photoUrl'] == null */ _image ==
+                                backgroundImage: /*userDocument['profilePicture'] == null */ _image ==
                                         null
                                     ? AssetImage('assets/defProfile.jpg')
-                                    // : NetworkImage(userDocument['photoUrl']),
+                                    // : NetworkImage(userDocument['profilePicture']),
                                     : FileImage(_image),
                                 radius: 75,
                               ),
@@ -210,7 +210,7 @@ class _EditProfileState extends State<EditProfile> {
                               _currentAge = userDocument['age'];
                             }
                             if (_url == null) {
-                              _url = userDocument['photoUrl'];
+                              _url = userDocument['profilePicture'];
                             }
 
                             updateProfile(

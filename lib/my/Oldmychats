@@ -72,7 +72,7 @@ class _MyChatsState extends State<MyChats> {
 
     user.then((DocumentSnapshot userSnapshot) => {
           hisdata(userSnapshot['name'], userSnapshot['email'],
-              userSnapshot['type'], userSnapshot['photoUrl']),
+              userSnapshot['type'], userSnapshot['profilePicture']),
         });
 
     setState(() {
@@ -120,7 +120,7 @@ class _MyChatsState extends State<MyChats> {
 
     user.then((DocumentSnapshot userSnapshot) => {
           mydata(userSnapshot['name'], userSnapshot['email'],
-              userSnapshot['type'], userSnapshot['photoUrl']),
+              userSnapshot['type'], userSnapshot['profilePicture']),
         });
   }
 

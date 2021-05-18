@@ -195,12 +195,12 @@ class _ActivityMapState extends State<ActivityMap> with WidgetsBindingObserver {
                           leading: CircleAvatar(
                               backgroundColor: Colors.transparent,
                               backgroundImage: snapshot
-                                          .data[index].data['photoUrl'] ==
+                                          .data[index].data['profilePicture'] ==
                                       ''
                                   ? AssetImage(
                                       'assets/defaultProfilePicture.png')
                                   : NetworkImage(snapshot.data[index].data[
-                                      'photoUrl'])), // no matter how big it is, it won't overflow
+                                      'profilePicture'])), // no matter how big it is, it won't overflow
                           title: Padding(
                             padding: const EdgeInsets.only(top: 5),
                             child: Text(

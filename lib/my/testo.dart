@@ -134,3 +134,91 @@ class _TestoState extends State<Testo> {
     );
   }
 }
+
+/*0.
+Container(
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: <Widget>[
+                              Container(
+                                color: Colors.red,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.34,
+                                width: MediaQuery.of(context).size.width * 1.0,
+                                child: Image.asset('assets/menuLogo.jpg'),
+                              ),
+                              photo.length == 0
+                                  ? CircleAvatar(
+                                      backgroundColor: Colors.transparent,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                            fit: BoxFit.fill,
+                                            image: AssetImage(
+                                                'assets/defProfile.jpg'),
+                                          ),
+                                        ),
+                                      ),
+                                      radius:
+                                          MediaQuery.of(context).size.width *
+                                              0.25,
+                                    )
+                                  : GestureDetector(
+                                      child: Hero(
+                                        transitionOnUserGestures: true,
+                                        tag: 'profileHero',
+                                        child: CircleAvatar(
+                                          backgroundColor: Colors.transparent,
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              image: DecorationImage(
+                                                fit: BoxFit.fill,
+                                                image:
+                                                    CachedNetworkImageProvider(
+                                                        photo),
+                                              ),
+                                            ),
+                                          ),
+                                          radius: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.25,
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(builder: (_) {
+                                          return HeroProfile(
+                                              photo: photo,
+                                              number: widget.number);
+                                        }));
+                                      }),
+                              widget.hisid == null
+                                  ? Container(
+                                      height:
+                                          MediaQuery.of(context).size.width *
+                                              0.12,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.12,
+                                      child: IconButton(
+                                        icon: Icon(
+                                          Icons.camera_alt,
+                                          size: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.07,
+                                        ),
+                                        color: Colors.white,
+                                        onPressed: () {
+                                          _showEditPanel(EditProfilePicture());
+                                        },
+                                      ),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.black,
+                                      ),
+                                    )
+                                  : Text(''),
+*/

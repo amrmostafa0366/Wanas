@@ -145,10 +145,10 @@ class _ActivityState extends State<Activity> {
                         radius:MediaQuery.of(context).size.width * 0.07,
                           backgroundColor: Colors.transparent,
                           backgroundImage:
-                              snapshot.data.docs[index]['photoUrl'] == ''
+                              snapshot.data.docs[index]['profilePicture'] == ''
                                   ? AssetImage('assets/defProfile.jpg')
                                   : NetworkImage(
-                                      snapshot.data.docs[index]['photoUrl'])),
+                                      snapshot.data.docs[index]['profilePicture'])),
                       title: Text(
                         snapshot.data.docs[index]['name'],
                         style: TextStyle(

@@ -6,7 +6,7 @@ class Account {
     this.about,
     this.gender,
     this.age,
-    this.photoUrl,
+    this.profilePicture,
     this.timeCreation,
   });
   final String id;
@@ -14,7 +14,7 @@ class Account {
   final String email;
   final String about;
   final String age;
-  final String photoUrl;
+  final String profilePicture;
   final String timeCreation;
   final String gender;
 }

@@ -24,7 +24,7 @@ class _EditProfileState extends State<EditProfile> {
       'name': name,
       'about': about,
       'age': age,
-      'photoUrl': url,
+      'profilePicture': url,
     });
   }
 
@@ -171,7 +171,7 @@ class _EditProfileState extends State<EditProfile> {
                                 _currentAge = userDocument['age'];
                               }
                               if (_url == null) {
-                                _url = userDocument['photoUrl'];
+                                _url = userDocument['profilePicture'];
                               }
 
                               updateProfile(

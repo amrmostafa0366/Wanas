@@ -10,7 +10,7 @@ import 'package:wanas/Controllers/unWantedController.dart';
 import 'package:wanas/Models/ProfileTile.dart';
 import 'package:wanas/my/BlockList.dart';
 import 'package:wanas/my/animation.dart';
-import 'package:wanas/my/editProfilePic.dart';
+import 'package:wanas/my/editPictures.dart';
 import 'package:wanas/my/menu.dart';
 import 'package:wanas/my/mychat.dart';
 import 'package:wanas/my/staticMap.dart';
@@ -434,59 +434,80 @@ class _ProfileState extends State<Profile> {
       floatingActionButton: floatingAction(),
       body: ListView(
         children: [
-          Padding(
-            padding:
-                EdgeInsets.only(top: MediaQuery.of(context).size.width * 0.05),
-            child: Column(
-              children: <Widget>[
-                StreamBuilder(
-                    stream: widget.hisid == null
-                        ? FirebaseFirestore.instance
-                            .collection('Users')
-                            .doc(loggedInUser.uid)
-                            .snapshots()
-                        : FirebaseFirestore.instance
-                            .collection('Users')
-                            .doc(widget.hisid)
-                            .snapshots(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError) {
-                        return Text('Something went wrong');
-                      }
+          Column(
+            children: <Widget>[
+              StreamBuilder(
+                  stream: widget.hisid == null
+                      ? FirebaseFirestore.instance
+                          .collection('Users')
+                          .doc(loggedInUser.uid)
+                          .snapshots()
+                      : FirebaseFirestore.instance
+                          .collection('Users')
+                          .doc(widget.hisid)
+                          .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Text('Something went wrong');
+                    }
 
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
-                      }
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator());
+                    }
 
-                      if (!snapshot.hasData) {
-                        return Text('');
-                      }
-                      double rate;
-                      int usersRatedMe = snapshot.data['numUsersRatedMe'];
-                      if (usersRatedMe == 0) {
-                        rate = 0.0;
-                      } else {
-                        rate = snapshot.data['userStars'] /
-                            snapshot.data['numUsersRatedMe'];
-                      }
-                      String name = snapshot.data['name'];
-                      String email = snapshot.data['email'];
-                      String about = snapshot.data['about'];
-                      String photo = snapshot.data['photoUrl'];
-                      Timestamp time = snapshot.data['timeCreation'];
-                      String timeCreation =
-                          DateFormat("dd/MM/yyyy").format(time.toDate());
-                      String age = snapshot.data['age'];
-                      String gender = snapshot.data['gender'];
+                    if (!snapshot.hasData) {
+                      return Text('');
+                    }
 
-                      return Column(
-                        children: <Widget>[
-                          photo.length == 0
-                              ? GestureDetector(
-                                  child: Hero(
-                                    transitionOnUserGestures: true,
-                                    tag: 'defHero',
-                                    child: CircleAvatar(
+                    double rate;
+
+                    int usersRatedMe = snapshot.data['numUsersRatedMe'];
+
+                    if (usersRatedMe == 0) {
+                      rate = 0.0;
+                    } else {
+                      rate = snapshot.data['userStars'] /
+                          snapshot.data['numUsersRatedMe'];
+                    }
+
+                    String name = snapshot.data['name'];
+                    String email = snapshot.data['email'];
+                    String about = snapshot.data['about'];
+                    String profilePicture = snapshot.data['profilePicture'];
+                    String coverPicture = snapshot.data['coverPicture'];
+                    Timestamp time = snapshot.data['timeCreation'];
+
+                    String timeCreation =
+                        DateFormat("dd/MM/yyyy").format(time.toDate());
+
+                    String age = snapshot.data['age'];
+
+                    String gender = snapshot.data['gender'];
+
+                    return Column(
+                      children: <Widget>[
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.5,
+                          child: Stack(alignment: Alignment.center, children: <
+                              Widget>[
+                            Align(
+                              alignment: Alignment.topCenter,
+                              child: Container(
+                                color: Colors.transparent,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.34,
+                                width: MediaQuery.of(context).size.width * 1.0,
+                                
+                                child:coverPicture.length==0
+                                ?Image.asset('assets/menuLogo.jpg',fit:BoxFit.fill)
+                                : CachedNetworkImage(imageUrl:coverPicture,fit:BoxFit.fill,),
+                              ),
+                            ),
+                            Positioned(
+                              top: MediaQuery.of(context).size.width *
+                                  0.32, 
+                              child: profilePicture.length == 0
+                                  ? CircleAvatar(
                                       backgroundColor: Colors.transparent,
                                       child: Container(
                                         decoration: BoxDecoration(
@@ -501,85 +522,154 @@ class _ProfileState extends State<Profile> {
                                       radius:
                                           MediaQuery.of(context).size.width *
                                               0.25,
-                                    ),
-                                  ),
-                                  onTap: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (_) {
-                                      return HeroProfile(number: widget.number);
-                                    }));
-                                  })
-                              : GestureDetector(
-                                  child: Hero(
-                                    transitionOnUserGestures: true,
-                                    tag: 'profileHero',
-                                    child: CircleAvatar(
-                                      backgroundColor: Colors.transparent,
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          image: DecorationImage(
-                                            fit: BoxFit.fill,
-                                            image: CachedNetworkImageProvider(
-                                                photo),
+                                    )
+                                  : GestureDetector(
+                                      child: Hero(
+                                        transitionOnUserGestures: true,
+                                        tag: 'profileHero',
+                                        child: CircleAvatar(
+                                          radius: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.25,
+                                          backgroundColor: Colors.transparent,
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              image: DecorationImage(
+                                                fit: BoxFit.fill,
+                                                image:
+                                                    CachedNetworkImageProvider(
+                                                        profilePicture),
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
-                                      radius:
-                                          MediaQuery.of(context).size.width *
-                                              0.28,
                                     ),
+                            ),
+                            //change Cover Picture
+                            widget.hisid ==null?
+                            Positioned(
+                              right: MediaQuery.of(context).size.width * 0.02,
+                              top: MediaQuery.of(context).size.height * 0.25,
+                              child: Container(
+                                height:
+                                    MediaQuery.of(context).size.width * 0.12,
+                                width: MediaQuery.of(context).size.width * 0.12,
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.camera_alt,
+                                    size: MediaQuery.of(context).size.width *
+                                        0.07,
                                   ),
-                                  onTap: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (_) {
-                                      return HeroProfile(
-                                          photo: photo, number: widget.number);
-                                    }));
-                                   }),
-                                  SizedBox(height: MediaQuery.of(context).size.height * .025),
-                                  Text(
-                                    name,
-                                    style:TextStyle(
-                                      fontSize: MediaQuery.of(context).size.width * 0.062,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                  color: Colors.white,
+                                  onPressed: () {
+                                    _showEditPanel(EditPictures(2));//edit cover
+                                  },
+                                ),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ):Text(''),
+                            // change profile picture
+                            widget.hisid ==null?
+                            Positioned(
+                              left: MediaQuery.of(context).size.width * 0.60,
+                              top: MediaQuery.of(context).size.height * 0.38,
+                              child: Container(
+                                height:
+                                    MediaQuery.of(context).size.width * 0.12,
+                                width: MediaQuery.of(context).size.width * 0.12,
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.camera_alt,
+                                    color: Colors.white,
+                                    size: MediaQuery.of(context).size.width *
+                                        0.07,
                                   ),
-                                  /*Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                    rate.toStringAsFixed(1),
-                                    style:TextStyle(
-                                      fontSize: MediaQuery.of(context).size.width * 0.040,
-                                      //fontWeight: FontWeight.bold,
-                                    ),
-                                   ),
-                                   Icon(Icons.star,size:MediaQuery.of(context).size.width * 0.065, color:Colors.yellow)
-                                    ],
-                                  ),
-                                  */
-                                  SizedBox(height: MediaQuery.of(context).size.height * .025),
-                        //  ProfileTile('Name', name, Icons.person),
-                          ProfileTile('Email', email, Icons.email),
-                          ProfileTile(
-                              'Bio', about, FlutterIcons.pencil_alt_faw5s),
-                          ProfileTile(
-                            'Rate',
-                            "${rate.toStringAsFixed(1)}/5 ($usersRatedMe)",
-                            Icons.star_half,
+                                  color: Colors.black,
+                                  onPressed: () {
+                                    _showEditPanel(EditPictures(1));//editProfile
+                                  },
+                                ),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ):Text(''),
+                          ]),
+                        ),
+
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height * .0001),
+
+                        Text(
+                          name,
+                          style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width * 0.065,
+                            fontWeight: FontWeight.bold,
                           ),
-                          ProfileTile(
-                              'Age', age, FlutterIcons.birthday_cake_faw),
-                          ProfileTile(
-                              'Gender', gender, FlutterIcons.gender_male_mco),
-                          ProfileTile(
-                              'Creation date', timeCreation, Icons.access_time)
-                        ],
-                      );
-                    })
-              ],
-            ),
+                        ),
+
+                        /*Row(
+  
+                                        mainAxisAlignment: MainAxisAlignment.center,
+  
+                                        children: [
+  
+                                          Text(
+  
+                                        rate.toStringAsFixed(1),
+  
+                                        style:TextStyle(
+  
+                                          fontSize: MediaQuery.of(context).size.width * 0.040,
+  
+                                          //fontWeight: FontWeight.bold,
+  
+                                        ),
+  
+                                       ),
+  
+                                       Icon(Icons.star,size:MediaQuery.of(context).size.width * 0.065, color:Colors.yellow)
+  
+                                        ],
+  
+                                      ),
+  
+                                      */
+
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height * .025),
+
+                        //  ProfileTile('Name', name, Icons.person),
+
+                        ProfileTile('Email', email, Icons.email),
+
+                        ProfileTile(
+                            'Bio', about, FlutterIcons.pencil_alt_faw5s),
+
+                        ProfileTile(
+                          'Rate',
+                          "${rate.toStringAsFixed(1)}/5 ($usersRatedMe)",
+                          Icons.star_half,
+                        ),
+
+                        ProfileTile('Age', age, FlutterIcons.birthday_cake_faw),
+
+                        ProfileTile(
+                            'Gender', gender, FlutterIcons.gender_male_mco),
+
+                        ProfileTile(
+                            'Creation date', timeCreation, Icons.access_time)
+                      ],
+                    );
+                  })
+            ],
           ),
         ],
       ),
@@ -613,7 +703,7 @@ class HeroProfile extends StatelessWidget {
                             return Container(
                               padding: EdgeInsets.all(
                                   MediaQuery.of(context).size.width * 0.04),
-                              child: EditProfilePicture(),
+                              child: EditPictures(2),//edit cover
                             );
                           });
                     }),

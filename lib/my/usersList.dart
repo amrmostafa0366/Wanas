@@ -83,11 +83,11 @@ class _UsersListState extends State<UsersList> {
                           leading: CircleAvatar(
                               backgroundColor: Colors.transparent,
                               backgroundImage: snapshot.data[index]
-                                          ['photoUrl'] ==
+                                          ['profilePicture'] ==
                                       ''
                                   ? AssetImage('assets/defProfile.jpg')
                                   : NetworkImage(snapshot.data[index][
-                                      'photoUrl'])), // no matter how big it is, it won't overflow
+                                      'profilePicture'])), // no matter how big it is, it won't overflow
                           title: Text(
                             snapshot.data[index]['name'],
                             style: TextStyle(

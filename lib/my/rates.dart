@@ -57,7 +57,7 @@ class _RatesState extends State<Rates> {
               itemCount: snapshot.data.docs.length,
               itemBuilder: (_, index) {
                 return RateCard(
-                snapshot.data.docs[index]['photoUrl'],
+                snapshot.data.docs[index]['profilePicture'],
                 snapshot.data.docs[index]['name'],
                 snapshot.data.docs[index]['opinion'],
                 snapshot.data.docs[index]['stars'],

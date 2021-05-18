@@ -40,7 +40,7 @@ class _UserProfileState extends State<UserProfile> {
 
     user.then((DocumentSnapshot userSnapshot) => {
           hisdata(userSnapshot['name'], userSnapshot['email'],
-              userSnapshot['status'], userSnapshot['photoUrl']),
+              userSnapshot['status'], userSnapshot['profilePicture']),
         });
   }
 
@@ -61,7 +61,7 @@ class _UserProfileState extends State<UserProfile> {
 
     user.then((DocumentSnapshot userSnapshot) => {
           mydata(userSnapshot['name'], userSnapshot['email'],
-              userSnapshot['status'], userSnapshot['photoUrl']),
+              userSnapshot['status'], userSnapshot['profilePicture']),
         });
   }
 
@@ -224,7 +224,7 @@ class _UserProfileState extends State<UserProfile> {
                           String name = snapshot.data['name'];
                           String email = snapshot.data['email'];
                           String about = snapshot.data['about'];
-                          String photo = snapshot.data['photoUrl'];
+                          String photo = snapshot.data['profilePicture'];
                           Timestamp time = snapshot.data['timeCreation'];
                           String timeCreation =
                               DateFormat("dd/MM/yyyy").format(time.toDate());
