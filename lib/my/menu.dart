@@ -111,6 +111,7 @@ class _MenuState extends State<Menu> {
 
   banDialog(BuildContext context) {
     showDialog(
+      barrierDismissible:false,
         context: context,
         builder: (context) {
           Future.delayed(Duration(seconds: 3), () {
@@ -364,7 +365,7 @@ class _MenuState extends State<Menu> {
                 title: Text('Test profile'),
                 onTap: () {
                   Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => Testo()));
+                      MaterialPageRoute(builder: (context) => LOL()));
                 },
               ),
               

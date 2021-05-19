@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:wanas/UserStatus/checkConnection.dart';
 import 'package:wanas/my/profile.dart' as myid;
 
 class EditProfile extends StatefulWidget {
@@ -43,7 +44,7 @@ class _EditProfileState extends State<EditProfile> {
     }
   }
 
-  Future<void> updateMyProfileToOthers(String name, String url) async {
+  Future<void> updateMyNameToOthers(String name) async {
     for (int i = 0; i < chatsIDs.length; ++i) {
       FirebaseFirestore.instance
           .collection('Users')
@@ -55,7 +56,6 @@ class _EditProfileState extends State<EditProfile> {
         for (DocumentSnapshot ds in snapshot.docs) {
           ds.reference.update({
             'name': name,
-            'image': url,
           });
         }
       });
@@ -83,15 +83,14 @@ class _EditProfileState extends State<EditProfile> {
                   Text('');
             }
             var userDocument = snapshot.data;
-            return ListView(
-              children: [
+            return ListView(children: [
               Form(
                 key: _formKey,
                 child: Container(
-                  padding:EdgeInsets.symmetric(
-                vertical: MediaQuery.of(context).size.height * .03,
-                horizontal: MediaQuery.of(context).size.height * .001,
-                ),
+                  padding: EdgeInsets.symmetric(
+                    vertical: MediaQuery.of(context).size.height * .03,
+                    horizontal: MediaQuery.of(context).size.height * .001,
+                  ),
                   child: Column(
                     children: <Widget>[
                       Text(
@@ -101,14 +100,15 @@ class _EditProfileState extends State<EditProfile> {
                         ),
                       ),
                       SizedBox(
-                      height: MediaQuery.of(context).size.height * .02,
-                    ),
+                        height: MediaQuery.of(context).size.height * .02,
+                      ),
                       TextFormField(
                         decoration: InputDecoration(
                           hintText: "Name",
                           hintStyle: TextStyle(
                               color: Colors.grey,
-                              fontSize: MediaQuery.of(context).size.width * .045),
+                              fontSize:
+                                  MediaQuery.of(context).size.width * .045),
                         ),
                         initialValue: userDocument['name'],
                         validator: (val) =>
@@ -116,29 +116,32 @@ class _EditProfileState extends State<EditProfile> {
                         onChanged: (val) => setState(() => _currentName = val),
                       ),
                       SizedBox(
-                      height: MediaQuery.of(context).size.height * .02,
-                    ),
+                        height: MediaQuery.of(context).size.height * .02,
+                      ),
                       TextFormField(
                         decoration: InputDecoration(
                           hintText: "Bio",
                           hintStyle: TextStyle(
                               color: Colors.grey,
-                              fontSize: MediaQuery.of(context).size.width * .045),
+                              fontSize:
+                                  MediaQuery.of(context).size.width * .045),
                         ),
                         initialValue: userDocument['about'],
-                        validator: (val) =>
-                            val.isEmpty ? 'Write something about yourself' : null,
+                        validator: (val) => val.isEmpty
+                            ? 'Write something about yourself'
+                            : null,
                         onChanged: (val) => setState(() => _currentAbout = val),
                       ),
                       SizedBox(
-                      height: MediaQuery.of(context).size.height * .02,
-                    ),
+                        height: MediaQuery.of(context).size.height * .02,
+                      ),
                       TextFormField(
                         decoration: InputDecoration(
                           hintText: "Age",
                           hintStyle: TextStyle(
                               color: Colors.grey,
-                              fontSize: MediaQuery.of(context).size.width * .045),
+                              fontSize:
+                                  MediaQuery.of(context).size.width * .045),
                         ),
                         initialValue: userDocument['age'],
                         validator: (val) =>
@@ -146,17 +149,18 @@ class _EditProfileState extends State<EditProfile> {
                         onChanged: (val) => setState(() => _currentAge = val),
                       ),
                       SizedBox(
-                      height: MediaQuery.of(context).size.height * .02,
-                    ),
+                        height: MediaQuery.of(context).size.height * .02,
+                      ),
                       FlatButton(
-                        height:MediaQuery.of(context).size.height*0.05,
-                        minWidth: MediaQuery.of(context).size.height*0.01,
+                          height: MediaQuery.of(context).size.height * 0.05,
+                          minWidth: MediaQuery.of(context).size.height * 0.01,
                           color: Colors.black,
                           child: Text(
                             'Update',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: MediaQuery.of(context).size.width * .045,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * .045,
                             ),
                           ),
                           onPressed: () async {
@@ -173,12 +177,18 @@ class _EditProfileState extends State<EditProfile> {
                               if (_url == null) {
                                 _url = userDocument['profilePicture'];
                               }
+                              var connection = checkConnection();
+                              connection = await connection;
+                              if (connection == true) {
+                                updateProfile(_currentName, _currentAbout,
+                                    _currentAge, _url);
 
-                              updateProfile(
-                                  _currentName, _currentAbout, _currentAge, _url);
-
-                              updateMyProfileToOthers(_currentName, _url);
-                              Navigator.pop(context);
+                                updateMyNameToOthers(_currentName);
+                                Navigator.pop(context);
+                              }
+                              else{
+                                connectionDialog(context);
+                              }
                             }
                           }),
                     ],
@@ -189,5 +199,4 @@ class _EditProfileState extends State<EditProfile> {
           }),
     );
   }
-
 }

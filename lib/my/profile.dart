@@ -8,6 +8,7 @@ import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:wanas/Controllers/blockListController.dart';
 import 'package:wanas/Controllers/unWantedController.dart';
 import 'package:wanas/Models/ProfileTile.dart';
+import 'package:wanas/Models/StarRating.dart';
 import 'package:wanas/my/BlockList.dart';
 import 'package:wanas/my/animation.dart';
 import 'package:wanas/my/editPictures.dart';
@@ -497,15 +498,17 @@ class _ProfileState extends State<Profile> {
                                 height:
                                     MediaQuery.of(context).size.height * 0.34,
                                 width: MediaQuery.of(context).size.width * 1.0,
-                                
-                                child:coverPicture.length==0
-                                ?Image.asset('assets/menuLogo.jpg',fit:BoxFit.fill)
-                                : CachedNetworkImage(imageUrl:coverPicture,fit:BoxFit.fill,),
+                                child: coverPicture.length == 0
+                                    ? Image.asset('assets/menuLogo.jpg',
+                                        fit: BoxFit.fill)
+                                    : CachedNetworkImage(
+                                        imageUrl: coverPicture,
+                                        fit: BoxFit.fill,
+                                      ),
                               ),
                             ),
                             Positioned(
-                              top: MediaQuery.of(context).size.width *
-                                  0.32, 
+                              top: MediaQuery.of(context).size.width * 0.32,
                               child: profilePicture.length == 0
                                   ? CircleAvatar(
                                       backgroundColor: Colors.transparent,
@@ -549,58 +552,74 @@ class _ProfileState extends State<Profile> {
                                     ),
                             ),
                             //change Cover Picture
-                            widget.hisid ==null?
-                            Positioned(
-                              right: MediaQuery.of(context).size.width * 0.02,
-                              top: MediaQuery.of(context).size.height * 0.25,
-                              child: Container(
-                                height:
-                                    MediaQuery.of(context).size.width * 0.12,
-                                width: MediaQuery.of(context).size.width * 0.12,
-                                child: IconButton(
-                                  icon: Icon(
-                                    Icons.camera_alt,
-                                    size: MediaQuery.of(context).size.width *
-                                        0.07,
-                                  ),
-                                  color: Colors.white,
-                                  onPressed: () {
-                                    _showEditPanel(EditPictures(2));//edit cover
-                                  },
-                                ),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ):Text(''),
+                            widget.hisid == null
+                                ? Positioned(
+                                    right: MediaQuery.of(context).size.width *
+                                        0.02,
+                                    top: MediaQuery.of(context).size.height *
+                                        0.25,
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.width *
+                                              0.12,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.12,
+                                      child: IconButton(
+                                        icon: Icon(
+                                          Icons.camera_alt,
+                                          size: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.07,
+                                        ),
+                                        color: Colors.white,
+                                        onPressed: () {
+                                          _showEditPanel(
+                                              EditPictures(2)); //edit cover
+                                        },
+                                      ),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  )
+                                : Text(''),
                             // change profile picture
-                            widget.hisid ==null?
-                            Positioned(
-                              left: MediaQuery.of(context).size.width * 0.60,
-                              top: MediaQuery.of(context).size.height * 0.38,
-                              child: Container(
-                                height:
-                                    MediaQuery.of(context).size.width * 0.12,
-                                width: MediaQuery.of(context).size.width * 0.12,
-                                child: IconButton(
-                                  icon: Icon(
-                                    Icons.camera_alt,
-                                    color: Colors.white,
-                                    size: MediaQuery.of(context).size.width *
-                                        0.07,
-                                  ),
-                                  color: Colors.black,
-                                  onPressed: () {
-                                    _showEditPanel(EditPictures(1));//editProfile
-                                  },
-                                ),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ):Text(''),
+                            widget.hisid == null
+                                ? Positioned(
+                                    left: MediaQuery.of(context).size.width *
+                                        0.60,
+                                    top: MediaQuery.of(context).size.height *
+                                        0.38,
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.width *
+                                              0.12,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.12,
+                                      child: IconButton(
+                                        icon: Icon(
+                                          Icons.camera_alt,
+                                          color: Colors.white,
+                                          size: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.07,
+                                        ),
+                                        color: Colors.black,
+                                        onPressed: () {
+                                          _showEditPanel(
+                                              EditPictures(1)); //editProfile
+                                        },
+                                      ),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  )
+                                : Text(''),
                           ]),
                         ),
 
@@ -614,38 +633,20 @@ class _ProfileState extends State<Profile> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-
-                        /*Row(
-  
-                                        mainAxisAlignment: MainAxisAlignment.center,
-  
-                                        children: [
-  
-                                          Text(
-  
-                                        rate.toStringAsFixed(1),
-  
-                                        style:TextStyle(
-  
-                                          fontSize: MediaQuery.of(context).size.width * 0.040,
-  
-                                          //fontWeight: FontWeight.bold,
-  
-                                        ),
-  
-                                       ),
-  
-                                       Icon(Icons.star,size:MediaQuery.of(context).size.width * 0.065, color:Colors.yellow)
-  
-                                        ],
-  
-                                      ),
-  
-                                      */
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            StarRating(
+                          rating: rate,
+                          color: Colors.yellow,
+                        ),
+                         ],
+                        ),
 
                         SizedBox(
                             height: MediaQuery.of(context).size.height * .025),
 
+                        Divider(),
                         //  ProfileTile('Name', name, Icons.person),
 
                         ProfileTile('Email', email, Icons.email),
@@ -703,7 +704,7 @@ class HeroProfile extends StatelessWidget {
                             return Container(
                               padding: EdgeInsets.all(
                                   MediaQuery.of(context).size.width * 0.04),
-                              child: EditPictures(2),//edit cover
+                              child: EditPictures(2), //edit cover
                             );
                           });
                     }),

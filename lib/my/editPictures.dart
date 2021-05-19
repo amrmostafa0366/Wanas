@@ -1,14 +1,15 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:wanas/UserStatus/checkConnection.dart';
 import 'package:wanas/helper/helper.dart';
 import 'package:wanas/my/animation.dart';
 //import 'package:wanas/my/myprofile.dart' as myid;
 import 'package:path/path.dart' as p;
 import 'package:wanas/my/profile.dart' as myid;
+import 'package:progress_dialog/progress_dialog.dart';
 
 class EditPictures extends StatefulWidget {
   final int number;
@@ -30,32 +31,35 @@ class _EditPicturesState extends State<EditPictures> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.delete,
-                color: Colors.red),
+                  Icon(Icons.delete, color: Colors.red),
                   Text('Remove\n  photo'),
                 ],
-            ),
-            onTap: (){
-              removePic();
-              Navigator.of(context).pushAndRemoveUntil(
-                SlidePosition(page: myid.Profile(), x: -1.0),
-                (route) => false,
-              );
-            }
-          ),
+              ),
+              onTap: () async {
+                var connection = checkConnection();
+                connection = await connection;
+                if (connection == true) {
+                  removePic();
+                  Navigator.of(context).pushAndRemoveUntil(
+                    SlidePosition(page: myid.Profile(), x: -1.0),
+                    (route) => false,
+                  );
+                } else {
+                  connectionDialog(context);
+                }
+              }),
           GestureDetector(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(Icons.photo_size_select_actual_rounded,
-                color: Colors.blue),
+                      color: Colors.blue),
                   Text('Gallery'),
                 ],
-            ),
-            onTap: (){
-              pickImageGallary();
-            }
-          ),
+              ),
+              onTap: () {
+                pickImageGallary();
+              }),
           GestureDetector(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -63,41 +67,16 @@ class _EditPicturesState extends State<EditPictures> {
                   Icon(Icons.camera_alt, color: Colors.purple),
                   Text('Camera'),
                 ],
-            ),
-            onTap: (){
-             pickImageCamera();
-            }
-          ),
-         /* FlatButton(
-            child: Icon(Icons.delete, color: Colors.red),
-            onPressed: () {
-              removePic();
-              
-              Navigator.of(context).pushAndRemoveUntil(
-                SlidePosition(page: myid.Profile(), x: -1.0),
-                (route) => false,
-              );
-            },
-          ),
-          FlatButton(
-            child: Icon(Icons.photo_size_select_actual_rounded,
-                color: Colors.blue),
-            onPressed: () {
-              pickImageGallary();
-            },
-          ),
-          FlatButton(
-            child: Icon(Icons.camera_alt, color: Colors.purple),
-            onPressed: () {
-              pickImageCamera();
-            },
-          ),*/
+              ),
+              onTap: () {
+                pickImageCamera();
+              }),
         ],
       ),
     );
   }
 
- /* pickImageCompressed(var type) async {
+  /* pickImageCompressed(var type) async {
     ImagePicker imagePicker = ImagePicker();
     PickedFile compressedImage = await imagePicker.getImage(
       source: type,
@@ -115,8 +94,9 @@ class _EditPicturesState extends State<EditPictures> {
       _image = image;
     });
     if (_image != null)
-      Navigator.of(context).pushReplacement(
-          SlidePosition(page: UploadProfilePicture(image:_image,number:widget.number), x: 1.0));
+      Navigator.of(context).pushReplacement(SlidePosition(
+          page: UploadProfilePicture(image: _image, number: widget.number),
+          x: 1.0));
   }
 
   void pickImageGallary() async {
@@ -126,39 +106,39 @@ class _EditPicturesState extends State<EditPictures> {
       _image = image;
     });
     if (_image != null)
-      Navigator.of(context).pushReplacement(
-          SlidePosition(page: UploadProfilePicture(image:_image,number:widget.number), x: 1.0));
+      Navigator.of(context).pushReplacement(SlidePosition(
+          page: UploadProfilePicture(image: _image, number: widget.number),
+          x: 1.0));
   }
 
   removePic() {
-    if(widget.number==1){
-        FirebaseFirestore.instance
-        .collection('Users')
-        .doc(myid.loggedInUser.uid)
-        .update({
-      'profilePicture': '',
-    });
-    UploadProfilePicture().updateMyProfilePictureToOthers('');
-     }
-     else if(widget.number==2){
-        FirebaseFirestore.instance
-        .collection('Users')
-        .doc(myid.loggedInUser.uid)
-        .update({
-      'coverPicture': '',
-        });
-     }
+    if (widget.number == 1) {
+      FirebaseFirestore.instance
+          .collection('Users')
+          .doc(myid.loggedInUser.uid)
+          .update({
+        'profilePicture': '',
+      });
+      UploadProfilePicture().updateMyProfilePictureToOthers('');
+    } else if (widget.number == 2) {
+      FirebaseFirestore.instance
+          .collection('Users')
+          .doc(myid.loggedInUser.uid)
+          .update({
+        'coverPicture': '',
+      });
+    }
   }
 }
 
 class UploadProfilePicture extends StatefulWidget {
   final File image;
   final int number;
-  UploadProfilePicture({this.image,this.number});
+  UploadProfilePicture({this.image, this.number});
   @override
   _UploadProfilePictureState createState() => _UploadProfilePictureState();
 
-   Future<void> updateMyProfilePictureToOthers(String url) async {
+  Future<void> updateMyProfilePictureToOthers(String url) async {
     var chatsIDs = await Helper.getMyChatsIDs(myid.loggedInUser.uid);
     for (int i = 0; i < chatsIDs.length; ++i) {
       FirebaseFirestore.instance
@@ -179,70 +159,96 @@ class UploadProfilePicture extends StatefulWidget {
 }
 
 class _UploadProfilePictureState extends State<UploadProfilePicture> {
+  ProgressDialog pr;
   String _url;
   @override
   Widget build(BuildContext context) {
+    pr = ProgressDialog(
+      context,
+      type: ProgressDialogType.Normal,
+      textDirection: TextDirection.ltr,
+      isDismissible: false,
+    );
+
+    pr.style(
+      borderRadius: MediaQuery.of(context).size.width * 0.05,
+      backgroundColor: Colors.white,
+      elevation: 5.0,
+      insetAnimCurve: Curves.easeInOut,
+      progress: 0.0,
+      progressWidgetAlignment: Alignment.center,
+      messageTextStyle: TextStyle(
+          color: Colors.black,
+          fontSize: MediaQuery.of(context).size.width * 0.05,
+          fontWeight: FontWeight.w600),
+    );
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor:Colors.black,
+        backgroundColor: Colors.black,
       ),
       body: Container(
-        color:Colors.blue,
+        color: Colors.blue,
         child: Column(
           children: [
             Container(
-              color:Colors.green,
-              child:Row(
-                children:[
-                  Container(
-                color:Colors.red,
-                height:MediaQuery.of(context).size.height *0.4 ,
-                width:MediaQuery.of(context).size.width *1.0,
-                child: Image.file(widget.image),
+              color: Colors.green,
+              child: Row(children: [
+                Container(
+                  color: Colors.red,
+                  height: MediaQuery.of(context).size.height * 0.4,
+                  width: MediaQuery.of(context).size.width * 1.0,
+                  child: Image.file(widget.image),
                 ),
-                ]
-              ),
+              ]),
             ),
             Container(
-              color:Colors.yellow,
-              child:Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    FlatButton(
-                      color: Colors.black,
-                          child: Text(
-                            'Cancel',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: MediaQuery.of(context).size.width * .045,
-                            ),
-                          ),
-                      onPressed: () {
-                        Navigator.of(context).pushAndRemoveUntil(
-                          SlidePosition(page: myid.Profile(), x: -1.0),
-                          (route) => false,
-                        );
-                      },
+              color: Colors.yellow,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  FlatButton(
+                    color: Colors.black,
+                    child: Text(
+                      'Cancel',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: MediaQuery.of(context).size.width * .045,
+                      ),
                     ),
-                    FlatButton(
-                      color: Colors.black,
-                          child: Text(
-                            'Done',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: MediaQuery.of(context).size.width * .045,
-                            ),
-                          ),
-                      onPressed: () {
-                        uploadImage(context);
-                      },
+                    onPressed: () {
+                      Navigator.of(context).pushAndRemoveUntil(
+                        SlidePosition(page: myid.Profile(), x: -1.0),
+                        (route) => false,
+                      );
+                    },
+                  ),
+                  FlatButton(
+                    color: Colors.black,
+                    child: Text(
+                      'Done',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: MediaQuery.of(context).size.width * .045,
+                      ),
                     ),
-                  ],
-            ),
+                    onPressed: () async{
+                      var connection = checkConnection();
+                connection = await connection;
+                if (connection == true) {
+                      pr.show();
+                      uploadImage(context);
+                } else{
+                 connectionDialog(context);
+                }
+                    },
+                  ),
+                ],
+              ),
             ),
           ],
         ),
-        ),
+      ),
     );
   }
 
@@ -260,9 +266,9 @@ class _UploadProfilePictureState extends State<UploadProfilePicture> {
         setState(() {
           _url = url;
         });
-        updateProfilePicture(_url);
-        if(widget.number==1){
-        UploadProfilePicture().updateMyProfilePictureToOthers(_url);
+        updatePicture(_url);
+        if (widget.number == 1) {
+          UploadProfilePicture().updateMyProfilePictureToOthers(_url);
         }
         Navigator.of(context).pushAndRemoveUntil(
           SlidePosition(page: myid.Profile(), x: -1.0),
@@ -276,22 +282,21 @@ class _UploadProfilePictureState extends State<UploadProfilePicture> {
     }
   }
 
-  Future<void> updateProfilePicture(String url) async {
-    if(widget.number==1){
+  Future<void> updatePicture(String url) async {
+    if (widget.number == 1) {
       FirebaseFirestore.instance
-        .collection('Users')
-        .doc(myid.loggedInUser.uid)
-        .update({
-      'profilePicture': url,
-    });
-    }
-    else if (widget.number==2){
+          .collection('Users')
+          .doc(myid.loggedInUser.uid)
+          .update({
+        'profilePicture': url,
+      });
+    } else if (widget.number == 2) {
       FirebaseFirestore.instance
-        .collection('Users')
-        .doc(myid.loggedInUser.uid)
-        .update({
-      'coverPicture': url,
-    });
+          .collection('Users')
+          .doc(myid.loggedInUser.uid)
+          .update({
+        'coverPicture': url,
+      });
     }
   }
 }
