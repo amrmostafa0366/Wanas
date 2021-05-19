@@ -22,80 +22,7 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
-  /*
-  List<String> chatsIDs = [];
-  Future getMyChats() async {
-    var firestore = FirebaseFirestore.instance;
-
-    QuerySnapshot qn = await firestore
-        .collection('Users')
-        .doc(myid.loggedInUser.uid)
-        .collection('chats')
-        .get();
-
-    for (int i = 0; i < qn.docs.length; ++i) {
-      chatsIDs.add(qn.docs[i]['id']);
-    }
-  }
-
-  Future<void> updateMyStatusToOthers() async {
-    for (int i = 0; i < chatsIDs.length; ++i) {
-      FirebaseFirestore.instance
-          .collection('Users')
-          .doc(chatsIDs[i])
-          .collection('chats')
-          .where('id', isEqualTo: myid.loggedInUser.uid)
-          .get()
-          .then((snapshot) {
-        for (DocumentSnapshot ds in snapshot.docs) {
-          ds.reference.update({'type': "offline"});
-        }
-      });
-    }
-  }
   
-  //////////////////////////////////////
-
-  void updateStatus() {
-    FirebaseFirestore.instance
-        .collection('Users')
-        .doc(myid.loggedInUser.uid)
-        .update({
-      'type': 'offline',
-    });
-  }
-*/
-
-////////////////////////////
-/*
-  String ip;
-
-  Future getIp() async {
-    final ipAddress = await IpInfoApi.getIPAddress();
-
-    setState(() {
-      ip = ipAddress;
-    });
-  }
-
-  //////////////////////////
-  checkBannedIp() {
-    bool banned;
-    FirebaseFirestore.instance
-        .collection('BannedIPs')
-        .doc(ip)
-        .get()
-        .then((DocumentSnapshot userSnapshot) {
-      if (userSnapshot.exists) {
-        banned = true;
-      } else {
-        banned=false;
-      }
-    });
-    return banned;
-  }
-*/
-///////////////////////////
   var reportsCounter;
   void getReoprtsCounter() {
     FirebaseFirestore.instance
@@ -353,10 +280,13 @@ class _MenuState extends State<Menu> {
                     /*  Navigator.of(context).pushAndRemoveUntil(
               SlidePosition(page: MyApp(), x: -1.0),(route) => false,);*/
                   }
+                  else{
+                    connectionDialog(context);
+                  }
                 },
               ),
               
-              ListTile(
+              /*ListTile(
                 leading: Icon(
                   FlutterIcons.setting_ant,
                   color: Colors.black,
@@ -367,7 +297,7 @@ class _MenuState extends State<Menu> {
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => LOL()));
                 },
-              ),
+              ),*/
               
             ],
           ),

@@ -184,66 +184,61 @@ class _UploadProfilePictureState extends State<UploadProfilePicture> {
     );
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-      ),
       body: Container(
-        color: Colors.blue,
-        child: Column(
-          children: [
-            Container(
-              color: Colors.green,
-              child: Row(children: [
-                Container(
-                  color: Colors.red,
-                  height: MediaQuery.of(context).size.height * 0.4,
-                  width: MediaQuery.of(context).size.width * 1.0,
-                  child: Image.file(widget.image),
-                ),
-              ]),
+        child: Stack(
+          children: <Widget>[
+            Align(
+              alignment: Alignment.center,
+              child: Container(
+                height: MediaQuery.of(context).size.width * 1.0,
+                width: MediaQuery.of(context).size.width * 1.0,
+                child: Image.file(widget.image),
+              ),
             ),
-            Container(
-              color: Colors.yellow,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  FlatButton(
-                    color: Colors.black,
-                    child: Text(
-                      'Cancel',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: MediaQuery.of(context).size.width * .045,
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    FlatButton(
+                      color: Colors.black,
+                      child: Text(
+                        'Cancel',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: MediaQuery.of(context).size.width * .045,
+                        ),
                       ),
+                      onPressed: () {
+                        Navigator.of(context).pushAndRemoveUntil(
+                          SlidePosition(page: myid.Profile(), x: -1.0),
+                          (route) => false,
+                        );
+                      },
                     ),
-                    onPressed: () {
-                      Navigator.of(context).pushAndRemoveUntil(
-                        SlidePosition(page: myid.Profile(), x: -1.0),
-                        (route) => false,
-                      );
-                    },
-                  ),
-                  FlatButton(
-                    color: Colors.black,
-                    child: Text(
-                      'Done',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: MediaQuery.of(context).size.width * .045,
+                    FlatButton(
+                      color: Colors.black,
+                      child: Text(
+                        'Done',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: MediaQuery.of(context).size.width * .045,
+                        ),
                       ),
+                      onPressed: () async {
+                        var connection = checkConnection();
+                        connection = await connection;
+                        if (connection == true) {
+                          pr.show();
+                          uploadImage(context);
+                        } else {
+                          connectionDialog(context);
+                        }
+                      },
                     ),
-                    onPressed: () async{
-                      var connection = checkConnection();
-                connection = await connection;
-                if (connection == true) {
-                      pr.show();
-                      uploadImage(context);
-                } else{
-                 connectionDialog(context);
-                }
-                    },
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],

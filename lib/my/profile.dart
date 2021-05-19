@@ -489,8 +489,9 @@ class _ProfileState extends State<Profile> {
                       children: <Widget>[
                         Container(
                           height: MediaQuery.of(context).size.height * 0.5,
-                          child: Stack(alignment: Alignment.center, children: <
-                              Widget>[
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: <Widget>[
                             Align(
                               alignment: Alignment.topCenter,
                               child: Container(
@@ -499,8 +500,8 @@ class _ProfileState extends State<Profile> {
                                     MediaQuery.of(context).size.height * 0.34,
                                 width: MediaQuery.of(context).size.width * 1.0,
                                 child: coverPicture.length == 0
-                                    ? Image.asset('assets/menuLogo.jpg',
-                                        fit: BoxFit.fill)
+                                    ? Image.asset('assets/Welcome.jpg',
+                                        fit: BoxFit.cover)
                                     : CachedNetworkImage(
                                         imageUrl: coverPicture,
                                         fit: BoxFit.fill,
