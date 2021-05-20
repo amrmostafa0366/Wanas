@@ -1,9 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:wanas/Controllers/blockListController.dart';
+import 'package:wanas/Controllers/BlockListController.dart';
+import 'package:wanas/UserStatus/checkConnection.dart';
 //import 'package:wanas/my/myprofile.dart' as myid;
-import 'package:wanas/my/profile.dart' as myid;
+import 'package:wanas/front/profile.dart' as myid;
 
 class BlockList extends StatefulWidget {
   @override
@@ -37,20 +38,22 @@ class _BlockListState extends State<BlockList> {
         style: TextStyle(color: Colors.black),
       ),
       onPressed: () async {
-        var _mydata =
-            await BlockListController.getUserData(myid.loggedInUser.uid);
-        var _hisdata = await BlockListController.getUserData(hisid);
-        // print(_hisdata);
-        // print(_mydata);
-        BlockListController.deleteUserFromUsersIBlocked(
-            myid.loggedInUser.uid, hisid);
-        BlockListController.deleteUserFromUsersBlockedMe(
-            hisid, myid.loggedInUser.uid);
-        BlockListController.mychatrooms(myid.loggedInUser.uid, hisid, _hisdata);
-        BlockListController.hischatrooms(hisid, myid.loggedInUser.uid, _mydata);
-        Navigator.pop(context);
+        var connection;
+        connection = checkConnection();
+        connection = await connection;
+        if (connection == true) {
+          var _mydata = await getUserData(myid.loggedInUser.uid);
+          var _hisdata = await getUserData(hisid);
+          deleteUserFromUsersIBlocked(myid.loggedInUser.uid, hisid);
+          deleteUserFromUsersBlockedMe(hisid, myid.loggedInUser.uid);
+          mychatrooms(myid.loggedInUser.uid, hisid, _hisdata);
+          hischatrooms(hisid, myid.loggedInUser.uid, _mydata);
+          Navigator.pop(context);
 
-        // Navigator.of(context).pushReplacement(SlideLeft(page: MyChats()));
+          // Navigator.of(context).pushReplacement(SlideLeft(page: MyChats()));
+        } else {
+          connectionDialog(context);
+        }
       },
     );
 
@@ -111,11 +114,10 @@ class _BlockListState extends State<BlockList> {
                     ),
                   ),
                   trailing: FlatButton(
-                    child:
-                        Text('Unblock',
-                         style: TextStyle(
+                    child: Text('Unblock',
+                        style: TextStyle(
                           color: Colors.white,
-                        fontSize: MediaQuery.of(context).size.width * 0.04,
+                          fontSize: MediaQuery.of(context).size.width * 0.04,
                         )),
                     color: Colors.red,
                     onPressed: () {

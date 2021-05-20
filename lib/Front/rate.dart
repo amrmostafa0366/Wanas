@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 //import 'package:wanas/my/myprofile.dart' as myid;
-import 'package:wanas/my/profile.dart' as myid;
+import 'package:wanas/front/profile.dart' as myid;
 class Rate extends StatefulWidget {
   @override
   _RateState createState() => _RateState();

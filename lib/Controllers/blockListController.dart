@@ -1,12 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
-class BlockListController extends StatefulWidget {
-  @override
-  _BlockListControllerState createState() => _BlockListControllerState();
-
-  static void mychatrooms(String myid,String hisid,List<String> _data/*,String hisemail,String hisname,String histype,String hisimage*/) {
-    print('mychatrooms');
+     void mychatrooms(String myid,String hisid,List<String> _data/*,String hisemail,String hisname,String histype,String hisimage*/) {
+   // print('mychatrooms');
     FirebaseFirestore.instance
         .collection('Users')
         .doc(myid)
@@ -23,7 +18,7 @@ class BlockListController extends StatefulWidget {
     });
   }
 
-  static void hischatrooms(String hisid,String myid,List<String> _data/*,String myemail,String myname,String mytype,String myimage*/) {
+     void hischatrooms(String hisid,String myid,List<String> _data/*,String myemail,String myname,String mytype,String myimage*/) {
     FirebaseFirestore.instance
         .collection('Users')
         .doc(hisid)
@@ -40,7 +35,7 @@ class BlockListController extends StatefulWidget {
     });
   }
 
-   static getUserData(String id) async{
+      getUserData(String id) async{
      List<String> _data =['lol','lol','lol','lol'];
      await FirebaseFirestore.instance
                 .collection('Users')
@@ -61,7 +56,7 @@ class BlockListController extends StatefulWidget {
         return _data;
   }
 
-  static Future<void> deleteUserFromUsersIBlocked(String myid,String hisid) async {
+     Future<void> deleteUserFromUsersIBlocked(String myid,String hisid) async {
     await FirebaseFirestore.instance
             .collection('Users')
             .doc(myid)
@@ -70,7 +65,7 @@ class BlockListController extends StatefulWidget {
             .delete();
   }
 
-  static Future<void> deleteUserFromUsersBlockedMe(String hisid,String myid) async {
+     Future<void> deleteUserFromUsersBlockedMe(String hisid,String myid) async {
     await FirebaseFirestore.instance
             .collection('Users')
             .doc(hisid)
@@ -78,14 +73,6 @@ class BlockListController extends StatefulWidget {
             .doc(myid)
             .delete();
   }
-  }
+  
 
 
-class _BlockListControllerState extends State<BlockListController> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      
-    );
-  }
-}

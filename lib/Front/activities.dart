@@ -2,9 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
-import 'package:wanas/my/activity.dart';
-import 'package:wanas/my/animation.dart';
-import 'package:wanas/my/profile.dart' as myid;
+import 'package:wanas/front/activity.dart';
+import 'package:wanas/front/animation.dart';
+import 'package:wanas/front/profile.dart' as myid;
 //import 'package:wanas/my/myprofile.dart';
 import 'menu.dart';
 

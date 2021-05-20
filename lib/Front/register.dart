@@ -2,9 +2,9 @@ import 'package:wanas/UserStatus/LoginStatus.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:wanas/my/login.dart';
+import 'package:wanas/front/login.dart';
 //import 'package:wanas/my/myprofile.dart';
-import 'package:wanas/my/profile.dart';
+import 'package:wanas/front/profile.dart';
 
 class Register extends StatefulWidget {
   @override

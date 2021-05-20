@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:wanas/UserStatus/checkConnection.dart';
 import 'package:wanas/helper/helper.dart';
-import 'package:wanas/my/animation.dart';
+import 'package:wanas/front/animation.dart';
 //import 'package:wanas/my/myprofile.dart' as myid;
 import 'package:path/path.dart' as p;
-import 'package:wanas/my/profile.dart' as myid;
+import 'package:wanas/front/profile.dart' as myid;
 import 'package:progress_dialog/progress_dialog.dart';
 
 class EditPictures extends StatefulWidget {

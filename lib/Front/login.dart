@@ -2,9 +2,9 @@ import 'package:wanas/UserStatus/LoginStatus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wanas/helper/helper.dart';
-import 'package:wanas/my/profile.dart';
+import 'package:wanas/front/profile.dart';
 //import 'package:wanas/my/myprofile.dart';
-import 'package:wanas/my/register.dart';
+import 'package:wanas/front/register.dart';
 
 class Login extends StatefulWidget {
   @override

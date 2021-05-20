@@ -1,10 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:wanas/Controllers/unWantedController.dart';
-import 'package:wanas/my/animation.dart';
-import 'package:wanas/my/messagesStream.dart';
-import 'package:wanas/my/mychats.dart';
-import 'package:wanas/my/profile.dart';
+import 'package:wanas/Controllers/UnWantedController.dart';
+import 'package:wanas/front/animation.dart';
+import 'package:wanas/front/messagesStream.dart';
+import 'package:wanas/front/profile.dart';
 //import 'package:wanas/my/viewProfile.dart';
 import 'package:wanas/Controllers/chatController.dart';
 import 'package:http/http.dart' as http;
@@ -28,7 +27,6 @@ class MyChat extends StatefulWidget {
 class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
   final messageTextController = TextEditingController();
   String messageText = '';
-  bool reportedBefore;
 
   var checkreported;
   var unWanted;
@@ -38,310 +36,17 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     super.initState();
     setState(() {
-      checkreported =
-          ChatController.checkExist(widget.currentUserId, widget.peerUserId);
-      unWanted = UnWantedController.checkUnwanted(
+      checkreported = checkExist(widget.currentUserId, widget.peerUserId);
+      unWanted = checkUnwanted(
           widget.currentUserId, widget.peerUserId);
     });
   }
 
-  /////////////
-  final List<String> reports = [
-    'Report reason',
-    'Nudity',
-    'Violence',
-    'Harassment',
-    "False information",
-    'Spam',
-    'Hate speech',
-    'Terrorism',
-    'Scam',
-    'Bullying',
-    'Promoting drug use'
-  ];
-  String _currentReport = 'Report reason';
-  final _formkey = GlobalKey<FormState>();
-
-  ////////////////////////////////////////////////////////
-
-  reportDialog(BuildContext context) {
-    // set up the buttons
-    Widget cancel = FlatButton(
-      child: Text(
-        "Cancel",
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: MediaQuery.of(context).size.width * 0.045,
-        ),
-      ),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    );
-    Widget yes = FlatButton(
-      child: Text(
-        "Yes",
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: MediaQuery.of(context).size.width * 0.045,
-        ),
-      ),
-      onPressed: () async {
-        if (_formkey.currentState.validate()) {
-          if (await checkreported == true) {
-            setState(() {
-              reportedBefore = true;
-            });
-          } else if (await checkreported == false) {
-            ChatController.report(
-                widget.currentUserId, widget.peerUserId, _currentReport);
-
-            showDialog(
-                context: context,
-                builder: (context) {
-                  Future.delayed(Duration(seconds: 1), () {
-                    Navigator.of(context).pop(true);
-                  });
-                  return AlertDialog(
-                    content: Text("reported successfully!",
-                        style: TextStyle(color: Colors.green)),
-                  );
-                }).whenComplete(() {
-              Navigator.of(context)
-                  .pushReplacement(SlidePosition(page: MyChats(), x: -1.0));
-            });
-
-            // print('reported successfully!');
-          } else {
-            //  print('$checkreported' + '3');
-          }
-        }
-      },
-    );
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text(
-        "Report",
-        style: TextStyle(
-          fontSize: MediaQuery.of(context).size.width * 0.06,
-        ),
-      ),
-      content: Form(
-        key: _formkey,
-        child: DropdownButtonFormField(
-            value: _currentReport,
-            items: reports.map((report) {
-              return DropdownMenuItem(
-                value: report,
-                child: Text(
-                  report,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: MediaQuery.of(context).size.width * 0.045,
-                  ),
-                ),
-              );
-            }).toList(),
-            onChanged: (val) => setState(() => _currentReport = val),
-            validator: (val) {
-              if (val == 'Report reason') {
-                return 'Verify the reason of reporting';
-              } else if (reportedBefore == true) {
-                return 'You have been reported this user before';
-              }
-              return null;
-            }),
-      ),
-      actions: [
-        cancel,
-        yes,
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
-
-////////////////////////////////////////////////////////
-  clearChatDialog(BuildContext context) {
-    // set up the buttons
-    Widget no = FlatButton(
-      child: Text(
-        "No",
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: MediaQuery.of(context).size.width * 0.045,
-        ),
-      ),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    );
-    Widget yes = FlatButton(
-      child: Text(
-        "Yes",
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: MediaQuery.of(context).size.width * 0.045,
-        ),
-      ),
-      onPressed: () {
-        ChatController.clearChat(widget.currentUserId, widget.peerUserId);
-        Navigator.pop(context);
-      },
-    );
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text(
-        "Clear?",
-        style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06),
-      ),
-      content: Text(
-        "Are you sure you want to clear this chat?",
-        style: TextStyle(
-          fontSize: MediaQuery.of(context).size.width * 0.045,
-        ),
-      ),
-      actions: [
-        no,
-        yes,
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
-
-///////////////////////////////////////////////////////
-  deleteChatDialog(BuildContext context) {
-    // set up the buttons
-    Widget no = FlatButton(
-      child: Text(
-        "No",
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: MediaQuery.of(context).size.width * 0.045,
-        ),
-      ),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    );
-    Widget yes = FlatButton(
-      child: Text(
-        "Yes",
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: MediaQuery.of(context).size.width * 0.045,
-        ),
-      ),
-      onPressed: () {
-        ChatController.deleteChat(widget.currentUserId, widget.peerUserId);
-        Navigator.of(context)
-            .pushReplacement(SlidePosition(page: MyChats(), x: -1.0));
-      },
-    );
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text(
-        "Delete?",
-        style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06),
-      ),
-      content: Text(
-        "Are you sure you want to delete this chat?",
-        style: TextStyle(
-          fontSize: MediaQuery.of(context).size.width * 0.045,
-        ),
-      ),
-      actions: [
-        no,
-        yes,
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
-
 //////////////////////////////////////////////////////
-  blockDialog(BuildContext context) {
-    // set up the buttons
-    Widget no = FlatButton(
-      child: Text(
-        "No",
-        style: TextStyle(color: Colors.black),
-      ),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    );
-    Widget yes = FlatButton(
-      child: Text(
-        "Yes",
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: MediaQuery.of(context).size.width * 0.045,
-        ),
-      ),
-      onPressed: () {
-        ChatController.block(widget.currentUserId, widget.peerUserId,
-            widget.hisname, widget.hisimage);
-        Navigator.of(context)
-            .pushReplacement(SlidePosition(page: MyChats(), x: -1.0));
-      },
-    );
 
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text(
-        "Block?",
-        style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06),
-      ),
-      content: Text(
-        "Are you sure you want to block this user?",
-        style: TextStyle(
-          fontSize: MediaQuery.of(context).size.width * 0.045,
-        ),
-      ),
-      actions: [
-        no,
-        yes,
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
-
-///////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////
   void choiceAction(String choice) {
     if (choice == PopUpMenuConstants.viewProfile) {
-      print('View Profile');
+      // print('View Profile');
 
       Navigator.of(context)
           // .push(SlidePosition(page: ViewProfile(widget.peerUserId, widget.name),x: 1.0));
@@ -350,24 +55,27 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
                   number: 2, hisid: widget.peerUserId, hisname: widget.hisname),
               x: 1.0));
     } else if (choice == PopUpMenuConstants.clearChat) {
-      print('Clear chat');
-      clearChatDialog(context);
+      // print('Clear chat');
+      clearChatDialog(context, widget.currentUserId, widget.peerUserId);
     } else if (choice == PopUpMenuConstants.deleteChat) {
-      print('Delete chat');
-      deleteChatDialog(context);
+      // print('Delete chat');
+      deleteChatDialog(context, widget.currentUserId, widget.peerUserId);
     } else if (choice == PopUpMenuConstants.report) {
-      print('Report');
-      reportDialog(context);
+      // print('Report');
+      // reportDialog(context);
+      reportDialog(
+          context, checkreported, widget.currentUserId, widget.peerUserId);
     } else if (choice == PopUpMenuConstants.block) {
-      print('block');
-      blockDialog(context);
+      // print('block');
+      blockDialog(context, widget.currentUserId, widget.peerUserId,
+          widget.hisname, widget.hisimage);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     // updateStatus('online');
-    ChatController.updateStatus(
+    updateStatus(
         widget.peerUserId, widget.currentUserId, 'online');
 
     return SafeArea(
@@ -427,21 +135,27 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
                               .snapshots(),
                           builder: (context, snapshot) {
                             if (!snapshot.hasData) {
-                              return Text('',style: TextStyle(
+                              return Text(
+                                '',
+                                style: TextStyle(
                                     color: Colors.white,
                                     fontSize:
                                         MediaQuery.of(context).size.width *
-                                            .04),);
-                            }if (snapshot.data['status']==null) {
-                              return Text('',style: TextStyle(
+                                            .04),
+                              );
+                            }
+                            if (snapshot.data['status'] == null) {
+                              return Text(
+                                '',
+                                style: TextStyle(
                                     color: Colors.white,
                                     fontSize:
                                         MediaQuery.of(context).size.width *
-                                            .04),);
-                            } 
-                             else if (snapshot.connectionState ==
+                                            .04),
+                              );
+                            } else if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                                  //need to be optimized..
+                              //need to be optimized..
                               return Text(
                                 snapshot.data['status'],
                                 style: TextStyle(
@@ -552,7 +266,8 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
               minLines: 1,
               maxLines: 4,
               textCapitalization: TextCapitalization.sentences,
-              style:TextStyle(fontSize: MediaQuery.of(context).size.width * .05),
+              style:
+                  TextStyle(fontSize: MediaQuery.of(context).size.width * .05),
               keyboardType: TextInputType.multiline,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.symmetric(
@@ -565,14 +280,13 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
               onChanged: (value) {
                 messageText = value;
                 if (messageText.length == 0) {
-                  ChatController.updateStatus(
+                  updateStatus(
                       widget.peerUserId, widget.currentUserId, 'online');
                 } else {
-                  ChatController.updateStatus(
+                  updateStatus(
                       widget.peerUserId, widget.currentUserId, 'typing...');
                 }
               },
-              
             ),
           ),
 
@@ -584,20 +298,17 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
                 messageTextController.clear();
 
                 if (messageText.length != 0) {
-                  ChatController.updateStatus(
+                  updateStatus(
                       widget.peerUserId, widget.currentUserId, 'online');
                 }
                 if (messageText.isEmpty) {
                 } else {
-                  ChatController.sendMessage(
-                      widget.currentUserId,
-                      widget.currentUserEmail,
-                      widget.peerUserId,
-                      messageText);
-                     // Timestamp.now());
-                  ChatController.updateLast(
+                  sendMessage(widget.currentUserId,
+                      widget.currentUserEmail, widget.peerUserId, messageText);
+                  // Timestamp.now());
+                  updateLast(
                       widget.peerUserId, widget.currentUserId);
-                  ChatController.updateNewMessage(
+                updateNewMessage(
                       widget.peerUserId, widget.currentUserId);
                   messageText = '';
                 }

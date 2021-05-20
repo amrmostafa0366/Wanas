@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:wanas/UserStatus/LoginStatus.dart';
 import 'package:flutter/services.dart';
 //import 'package:wanas/my/myprofile.dart';
-import 'package:wanas/my/profile.dart';
-import 'package:wanas/my/welcome.dart';
+import 'package:wanas/front/profile.dart';
+import 'package:wanas/front/welcome.dart';
 
 void main()async{
   WidgetsFlutterBinding.ensureInitialized();

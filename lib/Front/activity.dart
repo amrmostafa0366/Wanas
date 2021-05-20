@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:wanas/my/animation.dart';
-import 'package:wanas/my/profile.dart' as myid;
+import 'package:wanas/front/animation.dart';
+import 'package:wanas/front/profile.dart' as myid;
 //import 'package:wanas/my/myprofile.dart' as myid;
 import 'dart:math'; 
 //import 'package:wanas/my/userProfile.dart';

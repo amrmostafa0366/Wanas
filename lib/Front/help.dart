@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
-import 'package:wanas/my/menu.dart';
+import 'package:wanas/front/menu.dart';
 //import 'package:wanas/my/myprofile.dart' as myid;
-import 'package:wanas/my/profile.dart' as myid;
 class Help extends StatefulWidget {
   @override
   _HelpState createState() => _HelpState();

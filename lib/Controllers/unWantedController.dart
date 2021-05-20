@@ -1,11 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class UnWantedController extends StatefulWidget {
-  @override
-  _UnWantedControllerState createState() => _UnWantedControllerState();
 
-    static Future<bool> checkUnwanted(String myid, String hisid) async {
+     Future<bool> checkUnwanted(String myid, String hisid) async {
     bool unWanted = false;
     String reason = '';
     await FirebaseFirestore.instance
@@ -51,13 +48,3 @@ class UnWantedController extends StatefulWidget {
     return unWanted;
   
   }
-}
-
-class _UnWantedControllerState extends State<UnWantedController> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      
-    );
-  }
-}

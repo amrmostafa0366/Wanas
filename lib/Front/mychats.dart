@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:wanas/Controllers/unWantedController.dart';
-import 'package:wanas/my/animation.dart';
-import 'package:wanas/my/menu.dart';
-import 'package:wanas/my/mychat.dart';
+import 'package:wanas/Controllers/UnWantedController.dart';
+import 'package:wanas/front/animation.dart';
+import 'package:wanas/front/menu.dart';
+import 'package:wanas/front/mychat.dart';
 //import 'package:wanas/my/myprofile.dart' as myid;
-import 'package:wanas/my/profile.dart' as myid;
+import 'package:wanas/front/profile.dart' as myid;
 
 class MyChats extends StatefulWidget {
   @override
@@ -89,7 +89,7 @@ class _MyChatsState extends State<MyChats> {
                     ),
                   ),
                   onTap: () async {
-                    var unWanted = UnWantedController.checkUnwanted(
+                    var unWanted = checkUnwanted(
                         myid.loggedInUser.uid, snapshot.data.docs[index]['id']);
                     navigateToChat(
                         snapshot.data.docs[index]['id'],
@@ -100,12 +100,15 @@ class _MyChatsState extends State<MyChats> {
                         myid.loggedInUser.uid, snapshot.data.docs[index]['id']);
                   },
                   trailing: snapshot.data.docs[index]['newMessage']
-                      ? Text('new message',
+                      ? Text(
+                          'new message',
                           style: TextStyle(
-                              color: Colors.green, fontWeight: FontWeight.bold,
-                              fontSize: MediaQuery.of(context).size.width * 0.0388,
-                              ),
-                              )
+                            color: Colors.green,
+                            fontWeight: FontWeight.bold,
+                            fontSize:
+                                MediaQuery.of(context).size.width * 0.0388,
+                          ),
+                        )
                       : null,
                 );
               });

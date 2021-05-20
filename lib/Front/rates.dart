@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:wanas/Models/RateCard.dart';
-import 'package:wanas/my/menu.dart';
-import 'package:wanas/my/rate.dart';
+import 'package:wanas/front/menu.dart';
+import 'package:wanas/front/rate.dart';
 
 class Rates extends StatefulWidget {
   @override

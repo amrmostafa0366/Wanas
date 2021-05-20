@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:wanas/my/menu.dart';
+import 'package:wanas/front/menu.dart';
 //import 'package:wanas/my/myprofile.dart' as myid;
 //import 'package:wanas/my/userProfile.dart';
-import 'package:wanas/my/profile.dart' as myid;
+import 'package:wanas/front/profile.dart' as myid;
 class UsersList extends StatefulWidget {
   @override
   _UsersListState createState() => _UsersListState();

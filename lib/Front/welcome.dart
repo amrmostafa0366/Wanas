@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:wanas/my/login.dart';
-import 'package:wanas/my/register.dart';
+import 'package:wanas/front/login.dart';
+import 'package:wanas/front/register.dart';
 
 class Welcome extends StatefulWidget {
   @override

@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
-import 'package:wanas/my/animation.dart';
-import 'package:wanas/my/menu.dart';
+import 'package:wanas/front/animation.dart';
+import 'package:wanas/front/menu.dart';
 
 final List<String> howToUse = [
   'https://firebasestorage.googleapis.com/v0/b/wanas-7af81.appspot.com/o/help%2Foverview%2Fhowtouse%2F1.jpg?alt=media&token=486bde2d-df7e-4677-962d-53ecfacaa5d1',

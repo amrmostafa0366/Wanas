@@ -6,15 +6,15 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:wanas/Controllers/blockListController.dart';
-import 'package:wanas/Controllers/unWantedController.dart';
+import 'package:wanas/Controllers/UnWantedController.dart';
 import 'package:wanas/Models/ProfileTile.dart';
 import 'package:wanas/Models/StarRating.dart';
-import 'package:wanas/my/BlockList.dart';
-import 'package:wanas/my/animation.dart';
-import 'package:wanas/my/editPictures.dart';
-import 'package:wanas/my/menu.dart';
-import 'package:wanas/my/mychat.dart';
-import 'package:wanas/my/staticMap.dart';
+import 'package:wanas/front/BlockList.dart';
+import 'package:wanas/front/animation.dart';
+import 'package:wanas/front/editPictures.dart';
+import 'package:wanas/front/menu.dart';
+import 'package:wanas/front/mychat.dart';
+import 'package:wanas/front/staticMap.dart';
 import 'editprofile.dart';
 
 User loggedInUser;
@@ -85,7 +85,7 @@ class _ProfileState extends State<Profile> {
       if (userSnapshot.exists) {
         oldRate = userSnapshot['stars'];
       } else {
-        oldRate = 0.0;
+        oldRate = null;
       }
     });
     return oldRate;
@@ -144,6 +144,11 @@ class _ProfileState extends State<Profile> {
   var stars;
   var numUsersRatedMe;
 
+//
+
+
+//
+
 //user's profile "viewProfile" from "Chat"
   rateDialog(BuildContext context) {
     // set up the buttons
@@ -164,10 +169,12 @@ class _ProfileState extends State<Profile> {
       onPressed: () async {
         oldRate = getOldRate();
         oldRate = await oldRate;
-        print(oldRate);
-        getOldRate();
-        //if its not hte first time to rate this user ,,
-        if (oldRate != 0.0) {
+        print('old rate '+oldRate.toString());
+        // getOldRate();
+
+        //if (oldRate != 0.0) { //thats wrong,, because if i gave the user zero rate i can give him another zero rates,,,
+        //if its not the first time to rate this user ,,
+        if (oldRate!=null) {
           stars = getStars();
           stars = await stars;
           stars = stars - oldRate;
@@ -200,6 +207,8 @@ class _ProfileState extends State<Profile> {
           vertical: MediaQuery.of(context).size.height * .18),
       title: Text("Rate"),
       content: Container(
+        width: MediaQuery.of(context).size.width * 0.75,
+        height: MediaQuery.of(context).size.height * 0.10,
         alignment: Alignment.center,
         child: SmoothStarRating(
           borderColor: Colors.black,
@@ -258,8 +267,8 @@ class _ProfileState extends State<Profile> {
   var _mydata;
   var _hisdata;
   getUsersData() async {
-    _mydata = await BlockListController.getUserData(loggedInUser.uid);
-    _hisdata = await BlockListController.getUserData(widget.hisid);
+    _mydata = await getUserData(loggedInUser.uid);
+    _hisdata = await getUserData(widget.hisid);
   }
 
 //user's profile "viewProfile" from "Activity"
@@ -404,7 +413,7 @@ class _ProfileState extends State<Profile> {
 
     if (widget.number == 1) {
       checkUnWanted =
-          UnWantedController.checkUnwanted(loggedInUser.uid, widget.hisid);
+          checkUnwanted(loggedInUser.uid, widget.hisid);
       getUsersData();
     }
   }
@@ -453,7 +462,7 @@ class _ProfileState extends State<Profile> {
                     }
 
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(child: CircularProgressIndicator());
+                      //return Center(child: CircularProgressIndicator());
                     }
 
                     if (!snapshot.hasData) {
@@ -489,9 +498,8 @@ class _ProfileState extends State<Profile> {
                       children: <Widget>[
                         Container(
                           height: MediaQuery.of(context).size.height * 0.5,
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: <Widget>[
+                          child: Stack(alignment: Alignment.center, children: <
+                              Widget>[
                             Align(
                               alignment: Alignment.topCenter,
                               child: Container(
@@ -504,7 +512,7 @@ class _ProfileState extends State<Profile> {
                                         fit: BoxFit.cover)
                                     : CachedNetworkImage(
                                         imageUrl: coverPicture,
-                                        fit: BoxFit.fill,
+                                        fit: BoxFit.cover,
                                       ),
                               ),
                             ),
@@ -638,10 +646,10 @@ class _ProfileState extends State<Profile> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             StarRating(
-                          rating: rate,
-                          color: Colors.yellow,
-                        ),
-                         ],
+                              rating: rate,
+                              color: Colors.yellow,
+                            ),
+                          ],
                         ),
 
                         SizedBox(
@@ -649,17 +657,16 @@ class _ProfileState extends State<Profile> {
 
                         Divider(),
                         //  ProfileTile('Name', name, Icons.person),
-
-                        ProfileTile('Email', email, Icons.email),
-
-                        ProfileTile(
-                            'Bio', about, FlutterIcons.pencil_alt_faw5s),
-
                         ProfileTile(
                           'Rate',
                           "${rate.toStringAsFixed(1)}/5 ($usersRatedMe)",
                           Icons.star_half,
                         ),
+                        ProfileTile(
+                            'Bio', about, FlutterIcons.pencil_alt_faw5s),
+                        //SizedBox(child: Divider(),width: MediaQuery.of(context).size.width*0.80),
+
+                        ProfileTile('Email', email, Icons.email),
 
                         ProfileTile('Age', age, FlutterIcons.birthday_cake_faw),
 

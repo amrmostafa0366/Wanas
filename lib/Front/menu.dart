@@ -7,14 +7,14 @@ import 'package:wanas/UserStatus/LoginStatus.dart';
 import 'package:wanas/UserStatus/checkConnection.dart';
 import 'package:wanas/helper/helper.dart';
 import 'package:wanas/main.dart';
-import 'package:wanas/my/activities.dart';
-import 'package:wanas/my/animation.dart';
-import 'package:wanas/my/help2.dart';
-import 'package:wanas/my/mychats.dart';
+import 'package:wanas/front/activities.dart';
+import 'package:wanas/front/animation.dart';
+import 'package:wanas/front/help2.dart';
+import 'package:wanas/front/mychats.dart';
 //import 'package:wanas/my/myprofile.dart' as myid;
-import 'package:wanas/my/profile.dart' as myid;
-import 'package:wanas/my/rates.dart';
-import 'package:wanas/my/testo.dart';
+import 'package:wanas/front/profile.dart' as myid;
+import 'package:wanas/front/rates.dart';
+import 'package:wanas/front/testo.dart';
 
 class Menu extends StatefulWidget {
   @override
