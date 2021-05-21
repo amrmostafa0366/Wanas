@@ -59,6 +59,7 @@ dependencies:
   flushbar: ^1.10.4
   timezone: ^0.6.1
   flutter_map: any
+  flutter_restart: ^0.0.3
 
 
 dev_dependencies:

@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:wanas/front/profile.dart';
 import 'package:wanas/front/welcome.dart';
 
-void main()async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
@@ -42,10 +42,8 @@ class _MyAppState extends State<MyApp> {
           future: checkIsLogin(),
           builder: (context, snapshot) {
             if (snapshot.data == true) {
-             
               return Profile();
             } else {
-            
               return Welcome();
             }
           }),

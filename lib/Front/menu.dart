@@ -11,11 +11,10 @@ import 'package:wanas/front/activities.dart';
 import 'package:wanas/front/animation.dart';
 import 'package:wanas/front/help2.dart';
 import 'package:wanas/front/mychats.dart';
-//import 'package:wanas/my/myprofile.dart' as myid;
 import 'package:wanas/front/profile.dart' as myid;
 import 'package:wanas/front/rates.dart';
 import 'package:wanas/front/testo.dart';
-
+import 'package:flutter_restart/flutter_restart.dart';
 class Menu extends StatefulWidget {
   @override
   _MenuState createState() => _MenuState();
@@ -55,7 +54,7 @@ class _MenuState extends State<Menu> {
   @override
   void initState() {
     //getMyChats();
-    getReoprtsCounter();
+    //getReoprtsCounter();
     // getIp();
     //banned = checkBannedIp();
     //print(ip);
@@ -122,6 +121,7 @@ class _MenuState extends State<Menu> {
                 ),
                 ),
                 onTap: () => {
+                  getReoprtsCounter(),
                   if (reportsCounter == null || reportsCounter < 10)
                     {
                       setState(() {
@@ -149,6 +149,7 @@ class _MenuState extends State<Menu> {
                 ),
                 ),
                 onTap: () => {
+                  getReoprtsCounter(),
                   if (reportsCounter == null || reportsCounter < 10)
                     {
                       setState(() {
@@ -161,7 +162,9 @@ class _MenuState extends State<Menu> {
                           SlidePosition(page: MyChats(), x: 1.0)),
                     }
                   else
-                    {banDialog(context)}
+                    {
+                      banDialog(context)
+                      }
                 },
               ),
               ListTile(
@@ -177,6 +180,7 @@ class _MenuState extends State<Menu> {
                 ),
                 ),
                 onTap: () => {
+                  getReoprtsCounter(),
                   if (reportsCounter == null || reportsCounter < 10)
                     {
                       setState(() {
@@ -227,7 +231,7 @@ class _MenuState extends State<Menu> {
                 onTap: () async {
                   final Email email = Email(
                     body:
-                        "", //'Hi WanasApp Developers.I have a problem in this email:\n${myid.loggedInUser.email}\n and the problem is..',
+                       'Hi WanasApp Developers.I have a problem in this email:\n${myid.loggedInUser.email}\n and the problem is..',
 
                     subject: 'WanasApp',
 
@@ -254,7 +258,7 @@ class _MenuState extends State<Menu> {
                   var connection = checkConnection();
                   connection = await connection;
                   if(connection == true){
-                    
+
                   setState(() {
                     profileTile =
                         activitiesTile = chatsTile = helpTile = ratingTile = 0;
@@ -274,11 +278,12 @@ class _MenuState extends State<Menu> {
                   /*Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => MyApp()));*/
 
-                      Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (context) => MyApp()),(route) => false);
+                    /*  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) => MyApp()),(route) => false); */
 
                     /*  Navigator.of(context).pushAndRemoveUntil(
               SlidePosition(page: MyApp(), x: -1.0),(route) => false,);*/
+               await FlutterRestart.restartApp();
                   }
                   else{
                     connectionDialog(context);

@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:wanas/UserStatus/checkConnection.dart';
 import 'package:wanas/front/animation.dart';
 import 'package:wanas/front/mychats.dart';
-import 'package:flutter/cupertino.dart';
 
 //////////////////////////////////////////////////////////////////////////////////
 ///SEND MSG
 
 void sendMessage(String id1, String email1, String id2, String msg) async {
   //for me
+
+  //need to call addchatrooms here,,
 
   await FirebaseFirestore.instance
       .collection('Users')
@@ -301,9 +302,9 @@ reportDialog(BuildContext context, checkreported, String currentUserId,
                     .pushReplacement(SlidePosition(page: MyChats(), x: -1.0));
               });
             }
+          }
           } else if (connection == false) {
             connectionDialog(context);
-          }
         }
       });
 
