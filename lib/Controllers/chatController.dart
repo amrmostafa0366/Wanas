@@ -1,8 +1,61 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:wanas/Controllers/BlockListController.dart';
 import 'package:wanas/UserStatus/checkConnection.dart';
 import 'package:wanas/front/animation.dart';
 import 'package:wanas/front/mychats.dart';
+
+
+
+
+
+//////////////////////////////////////////////////
+///CHECK EXistance of a field inside a doc..
+
+ checkIdExist(String id1, String id2,String mainCollection,String subCollection) async {
+    var id;
+    await FirebaseFirestore.instance
+        .collection(mainCollection)
+        .doc(id2)
+        .collection(subCollection)
+        .doc(id1)
+        .get()
+        .then((DocumentSnapshot userSnapshot) {
+      if (userSnapshot.exists) {
+        id = userSnapshot['id'];
+      } else {
+        id = null;
+      }
+    });
+    return id;
+  }
+
+
+
+/////////////////////////////////////////////////
+///create a new chatroom for the peer user after deltetation...
+hisChatRooms(String id1,String id2,) async{
+  var _mydata;
+_mydata = await getUserData(id1);
+    FirebaseFirestore.instance
+        .collection('Users')
+        .doc(id2)
+        .collection('chats')
+        .doc(id1)
+        .set({
+      'id': id1,//my id
+      'email': _mydata[0],//my email
+      'name': _mydata[1], // my name
+      'status': _mydata[2],// my status
+      'image': _mydata[3], // my image
+      'newMessage': true,
+      'last': '${DateTime.now().millisecondsSinceEpoch}',
+    });
+  }
+
+
+
+
 
 //////////////////////////////////////////////////////////////////////////////////
 ///SEND MSG
@@ -10,7 +63,6 @@ import 'package:wanas/front/mychats.dart';
 void sendMessage(String id1, String email1, String id2, String msg) async {
   //for me
 
-  //need to call addchatrooms here,,
 
   await FirebaseFirestore.instance
       .collection('Users')
@@ -25,7 +77,11 @@ void sendMessage(String id1, String email1, String id2, String msg) async {
     'date': DateTime.now(),
   });
   //for him
-  await FirebaseFirestore.instance
+  // make a condition which check existance of peer user id,, if exist -> send msg , else -> create new 
+  var id = checkIdExist(id1,id2,'Users','chats');
+  id = await id;
+  if(id !=null){
+    await FirebaseFirestore.instance
       .collection('Users')
       .doc(id2)
       .collection('chats')
@@ -37,6 +93,24 @@ void sendMessage(String id1, String email1, String id2, String msg) async {
     'sender': email1,
     'date': DateTime.now(),
   });
+  }else{
+    // here i should create a new chat room
+    hisChatRooms(id1,id2);
+    await FirebaseFirestore.instance
+      .collection('Users')
+      .doc(id2)
+      .collection('chats')
+      .doc(id1)
+      .collection('messages')
+      .doc('${DateTime.now()}') //
+      .set({
+    'message': msg,
+    'sender': email1,
+    'date': DateTime.now(),
+      });
+
+  }
+  
 }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -211,14 +285,15 @@ Future<void> report(String myid, String hisid, String _currentReport) async {
 }
 
 //////////////////////////////////////////////////////////////////////////////
-///CHECK EXIST
-Future<bool> checkExist(String myid, String hisid) async {
+///CHECK Reported before
+///also can be used to check if we are friends
+Future<bool> checkExist(String myid, String hisid,String mainCollection,String subCollection) async {
   bool exists = false;
   try {
     await FirebaseFirestore.instance
-        .collection('Users')
+        .collection(mainCollection) //Users
         .doc(myid)
-        .collection('UsersIReported')
+        .collection(subCollection)//chats
         .doc(hisid)
         .get()
         .then((doc) {

@@ -36,7 +36,7 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     super.initState();
     setState(() {
-      checkreported = checkExist(widget.currentUserId, widget.peerUserId);
+      checkreported = checkExist(widget.currentUserId, widget.peerUserId,'Users','UsersIReported');
       unWanted = checkUnwanted(
           widget.currentUserId, widget.peerUserId);
     });

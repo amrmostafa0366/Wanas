@@ -21,7 +21,13 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
-  
+  /*
+E/flutter ( 9032): [ERROR:flutter/lib/ui/ui_dart_state.cc(177)] Unhandled Exception: setState() called after dispose(): _MenuState#f1656(lifecycle state: defunct, not mounted)
+E/flutter ( 9032): This error happens if you call setState() on a State object for a widget that no longer appears in the widget tree (e.g., whose parent widget no longer includes the widget in its build). This error can occur when code calls setState() from a timer or an animation callback.
+E/flutter ( 9032): The preferred solution is to cancel the timer or stop listening to the animation in the dispose() callback. Another solution is to check the "mounted" property of this object before calling setState() to ensure the object is still in the tree.
+E/flutter ( 9032): The preferred solution is to cancel the timer or stop listening to the animation in the dispose() callback. Another solution is to check the "mounted" property of this object before calling setState() to ensure the object is still in the tree.
+E/flutter ( 9032): This error might indicate a memory leak if setState() is being called because another object is retaining a reference to this State object after it has been removed from the tree. To avoid memory leaks, consider breaking the reference to this object during dispose().
+   */
   var reportsCounter;
   void getReoprtsCounter() {
     FirebaseFirestore.instance
