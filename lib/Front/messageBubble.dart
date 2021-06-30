@@ -63,7 +63,7 @@ class MessageBubble extends StatelessWidget {
                             height: MediaQuery.of(context).size.height * 1,
                           ),
                       errorWidget: (context, url, error) =>
-                          Icon(Icons.error, size: 150),
+                          Icon(Icons.error_outline, size: 150),
                       width: 300.0,
                       height: 200.0,
                       fit: BoxFit.cover,

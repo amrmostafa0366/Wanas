@@ -34,7 +34,7 @@ class _RatesState extends State<Rates> {
       drawer: Menu(),
       floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.black,
-          child: Icon(Icons.edit),
+          child: Icon(Icons.edit_rounded),
           onPressed: () {
             _showRatePanel();
           }),

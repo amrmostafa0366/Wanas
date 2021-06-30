@@ -90,7 +90,7 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.arrow_back),
+                  Icon(Icons.arrow_back_outlined),
                   CircleAvatar(
                     backgroundColor: Colors.transparent,
                     backgroundImage: widget.hisimage == ''
@@ -314,7 +314,7 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
                 }
               },
               child: Icon(
-                Icons.send,
+                Icons.send_rounded,
                 size: MediaQuery.of(context).size.width * .09,
               ),
             ),

@@ -20,12 +20,12 @@ class StarRating extends StatelessWidget {
       );
     } else if (index > rating - 1 && index < rating) {
       icon = new Icon(
-        Icons.star_half,
+        Icons.star_half_outlined,
         color: color ?? Theme.of(context).primaryColor,
       );
     } else {
       icon = new Icon(
-        Icons.star,
+        Icons.star_outlined,
         color: color ?? Theme.of(context).primaryColor,
       );
     }

@@ -45,7 +45,7 @@ class _StaticMapState extends State<StaticMap> {
                 point: LatLng(widget.latitude, widget.longitude),
                 builder: (ctx) => Container(
                   child: IconButton(
-                    icon:Icon(Icons.location_on),
+                    icon:Icon(Icons.location_on_sharp),
                     color:Colors.red,
                     iconSize: MediaQuery.of(context).size.width * 0.13,
                     onPressed: (){},

@@ -216,8 +216,8 @@ class _ProfileState extends State<Profile> {
           rating: newRate,
           isReadOnly: false,
           size: MediaQuery.of(context).size.width * .1,
-          filledIconData: Icons.star,
-          halfFilledIconData: Icons.star_half,
+          filledIconData: Icons.star_outlined,
+          halfFilledIconData: Icons.star_half_outlined,
           defaultIconData: Icons.star_border,
           starCount: 5,
           allowHalfRating: true,
@@ -347,7 +347,7 @@ class _ProfileState extends State<Profile> {
     if (widget.number == null) {
       return FloatingActionButton(
           backgroundColor: Colors.black,
-          child: Icon(Icons.edit),
+          child: Icon(Icons.edit_rounded),
           onPressed: () {
             _showEditPanel(EditProfile());
           });
@@ -362,7 +362,7 @@ class _ProfileState extends State<Profile> {
               alignment: Alignment.bottomLeft,
               child: FloatingActionButton(
                 backgroundColor: Colors.black,
-                child: Icon(Icons.location_on, color: Colors.white),
+                child: Icon(Icons.location_on_sharp, color: Colors.white),
                 heroTag: 'Map',
                 onPressed: () async {
                   if (await checkUnWanted == false) {
@@ -382,7 +382,7 @@ class _ProfileState extends State<Profile> {
               alignment: Alignment.bottomRight,
               child: FloatingActionButton(
                 backgroundColor: Colors.black,
-                child: Icon(Icons.message),
+                child: Icon(Icons.message_rounded),
                 heroTag: 'Chat',
                 onPressed: () async {
                   if (await checkUnWanted == false) {
@@ -660,13 +660,13 @@ class _ProfileState extends State<Profile> {
                         ProfileTile(
                           'Rate',
                           "${rate.toStringAsFixed(1)}/5 ($usersRatedMe)",
-                          Icons.star_half,
+                          Icons.star_half_outlined,
                         ),
                         ProfileTile(
                             'Bio', about, FlutterIcons.pencil_alt_faw5s),
                         //SizedBox(child: Divider(),width: MediaQuery.of(context).size.width*0.80),
 
-                        ProfileTile('Email', email, Icons.email),
+                        ProfileTile('Email', email, Icons.email_rounded),
 
                         ProfileTile('Age', age, FlutterIcons.birthday_cake_faw),
 
@@ -674,7 +674,7 @@ class _ProfileState extends State<Profile> {
                             'Gender', gender, FlutterIcons.gender_male_mco),
 
                         ProfileTile(
-                            'Creation date', timeCreation, Icons.access_time)
+                            'Creation date', timeCreation, Icons.access_time_outlined)
                       ],
                     );
                   })
@@ -704,7 +704,7 @@ class HeroProfile extends StatelessWidget {
         actions: number == null
             ? <Widget>[
                 IconButton(
-                    icon: Icon(Icons.edit),
+                    icon: Icon(Icons.edit_rounded),
                     onPressed: () {
                       showModalBottomSheet(
                           context: context,

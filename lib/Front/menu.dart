@@ -225,7 +225,7 @@ E/flutter ( 9032): This error might indicate a memory leak if setState() is bein
               ),
               ListTile(
                 leading: Icon(
-                  Icons.email,
+                  Icons.email_rounded,
                   color: Colors.black,
                   size: MediaQuery.of(context).size.width * 0.07,
                 ),
