@@ -10,9 +10,10 @@ class Global extends StatefulWidget {
 }
 
 class _GlobalState extends State<Global> {
+
   Query posts = FirebaseFirestore.instance
       .collection('Users')
-      .orderBy('post', descending: true);
+      .orderBy('postDate', descending: true);
 
   _showRatePanel() {
     showModalBottomSheet(
@@ -60,7 +61,7 @@ class _GlobalState extends State<Global> {
                 snapshot.data.docs[index]['profilePicture'],
                 snapshot.data.docs[index]['name'],
                 snapshot.data.docs[index]['post'],
-                //snapshot.data.docs[index]['postDate'],
+                snapshot.data.docs[index]['postDate'],
                 //snapshot.data.docs[index]['stars'],
                 );
               });

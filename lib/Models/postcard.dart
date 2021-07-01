@@ -5,10 +5,10 @@ class PostCard extends StatelessWidget {
   final String image;
   final String name;
   final String opinion;
-  //final String date;
+  final String date;
   //final double stars;
 
-  PostCard(this.image, this.name, this.opinion/*, this.stars,this.date*/);
+  PostCard(this.image, this.name, this.opinion/*, this.stars*/,this.date);
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class PostCard extends StatelessWidget {
                 rating: stars,
                 color: Colors.black,
               ),*/
-             // subtitle: ,
+              subtitle: Text(date.substring(0,16)),
             ),
 
          /* Padding(
@@ -100,3 +100,32 @@ class PostCard extends StatelessWidget {
     );
   }
 }
+
+// i need to make it responsive here..
+/*
+
+yoga
+painting
+acting
+hiking
+archery
+aerobics
+aikido
+airsoft
+animal training
+art
+basketball
+photography
+reading
+boxing
+racing
+chess
+coding
+studying
+crochet
+driving
+hockey
+golf
+
+
+*/
