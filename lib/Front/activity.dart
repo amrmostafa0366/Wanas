@@ -51,7 +51,7 @@ class _ActivityState extends State<Activity> {
       users = FirebaseFirestore.instance
           .collection('Users')
           .where('activity', isEqualTo:activity)
-      //    .where('country', isEqualTo:myid.country)
+          .where('country', isEqualTo:myid.country)
           .where('id', isNotEqualTo: myid.loggedInUser.uid);
     });
   }
