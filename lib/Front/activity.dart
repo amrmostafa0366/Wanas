@@ -53,8 +53,10 @@ class _ActivityState extends State<Activity> {
     setState(() {
       users = FirebaseFirestore.instance
           .collection('Users')
-          .where('activity', isEqualTo: activity)
+          .where('activity', isEqualTo:activity)
+         // .where('country', isEqualTo: widget.activity)
           .where('id', isNotEqualTo: myid.loggedInUser.uid);
+          
     });
   }
 
@@ -110,6 +112,71 @@ class _ActivityState extends State<Activity> {
     });
     super.dispose();
   }
+  
+double dist=0.0;
+
+  filterDialog() {
+  // set up the buttons
+  Widget cancle = FlatButton(
+    child: Text(
+      "Cancle",
+      style: TextStyle(color: Colors.black
+      ,
+      fontSize: MediaQuery.of(context).size.width * 0.045,
+      ),
+    ),
+    onPressed: () {
+      Navigator.pop(context);
+    },
+  );
+  Widget apply = FlatButton(
+    child: Text(
+      "Apply",
+      style: TextStyle(
+        color: Colors.black,
+        fontSize: MediaQuery.of(context).size.width * 0.045,
+      ),
+      
+    ),
+    onPressed: () {
+        
+      }
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text(
+      "Filter",
+      style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06),
+    ),
+ /*   content: TextFormField(
+                      style: TextStyle(color: Colors.black),
+                      decoration: InputDecoration(
+                        hintText: "distance in meter, ex:500",
+                        hintStyle: TextStyle(
+                            color: Colors.grey,
+                            fontSize: MediaQuery.of(context).size.width * .045),
+                      ),
+                      validator: (val) =>
+                          val.isEmpty ? 'Enter your name' : null,
+                      onChanged: (val) {
+                        setState(() => dist = double.parse(val));
+                      },
+                    ),*/
+    actions: [
+      cancle,
+      apply,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
 
   @override
   Widget build(BuildContext context) {
@@ -121,6 +188,13 @@ class _ActivityState extends State<Activity> {
             fontSize: MediaQuery.of(context).size.width * 0.056,
           ),
           ),
+          actions:[
+            IconButton(
+              onPressed:(){
+                filterDialog();
+            },
+             icon: Icon(Icons.filter_alt_sharp))
+          ],
         ),
         body: StreamBuilder<QuerySnapshot>(
           stream: users.snapshots(),

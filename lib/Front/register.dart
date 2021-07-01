@@ -12,7 +12,7 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  String name, email, about, password, confirmPassword;
+  String name, email, about, password, confirmPassword, country;
   final _auth = FirebaseAuth.instance;
   User loggedInUser;
 
@@ -107,6 +107,7 @@ class _RegisterState extends State<Register> {
     '99',
     '100'
   ];
+
   String _currentAge = "Age";
   String error = '';
 

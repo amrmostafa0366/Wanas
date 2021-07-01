@@ -1,84 +1,70 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:progress_dialog/progress_dialog.dart';
 
-//import '../../lib/progress_dialog.dart';
+void main() => runApp(const MyApple());
 
-ProgressDialog pr;
+/// This is the main application widget.
+class MyApple extends StatelessWidget {
+  const MyApple({Key key}) : super(key: key);
 
-class LOL extends StatelessWidget {
-
-  @override
-  Widget build(BuildContext context) {
-    pr = ProgressDialog(
-      context,
-      type: ProgressDialogType.Normal,
-      textDirection: TextDirection.rtl,
-      isDismissible: true,
-    );
-
-    pr.style(
-      borderRadius: MediaQuery.of(context).size.width *0.05 ,
-      backgroundColor: Colors.white,
-      elevation: 5.0,
-      insetAnimCurve: Curves.easeInOut,
-      progress: 0.0,
-      progressWidgetAlignment: Alignment.center,
-      messageTextStyle: TextStyle(
-          color: Colors.black, fontSize: MediaQuery.of(context).size.width *0.05 , fontWeight: FontWeight.w600),
-    );
-
-    return Scaffold(
-      body: Center(
-        child: RaisedButton(
-            onPressed: () async {
-              await pr.show();
-            }),
-      ),
-    );
-  }
-}
-
-class FirstScreen extends StatefulWidget {
-  @override
-  _FirstScreenState createState() => _FirstScreenState();
-}
-
-class _FirstScreenState extends State<FirstScreen> {
-  ProgressDialog pr;
+  static const String _title = 'Flutter Code Sample';
 
   @override
   Widget build(BuildContext context) {
-    pr = new ProgressDialog(context, showLogs: true);
-
-    return Scaffold(
-      body: Center(
-        child: RaisedButton(
-          onPressed: () {
-            pr.show();
-            Future.delayed(Duration(seconds: 3)).then((value) {
-              pr.hide().whenComplete(() {
-                Navigator.of(context).push(CupertinoPageRoute(
-                    builder: (BuildContext context) => SecondScreen()));
-              });
-            });
-          },
+    return MaterialApp(
+      title: _title,
+      home: Scaffold(
+        appBar: AppBar(title: const Text(_title)),
+        body: const Center(
+          child: MyStatefulWidget(),
         ),
       ),
     );
   }
 }
 
-class SecondScreen extends StatefulWidget {
+enum SingingCharacter { Default,lafayette, jefferson }
+
+/// This is the stateful widget that the main application instantiates.
+class MyStatefulWidget extends StatefulWidget {
+  const MyStatefulWidget({Key key}) : super(key: key);
+
   @override
-  _SecondScreenState createState() => _SecondScreenState();
+  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
 }
 
-class _SecondScreenState extends State<SecondScreen> {
+/// This is the private State class that goes with MyStatefulWidget.
+class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  SingingCharacter _character = SingingCharacter.lafayette;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: Text('I am second screen')),
+    return Column(
+      children: <Widget>[
+        ListTile(
+          title: const Text('Lafayette'),
+          leading: Radio<SingingCharacter>(
+            value: SingingCharacter.lafayette,
+            groupValue: _character,
+            onChanged: (SingingCharacter value) {
+              setState(() {
+                _character = value;
+              });
+            },
+          ),
+        ),
+        ListTile(
+          title: const Text('Thomas Jefferson'),
+          leading: Radio<SingingCharacter>(
+            value: SingingCharacter.jefferson,
+            groupValue: _character,
+            onChanged: (SingingCharacter value) {
+              setState(() {
+                _character = value;
+              });
+            },
+          ),
+        ),
+      ],
     );
   }
 }

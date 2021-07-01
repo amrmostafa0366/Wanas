@@ -1,27 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:smooth_star_rating/smooth_star_rating.dart';
 //import 'package:wanas/my/myprofile.dart' as myid;
 import 'package:wanas/front/profile.dart' as myid;
-class Rate extends StatefulWidget {
+class Post extends StatefulWidget {
   @override
-  _RateState createState() => _RateState();
+  _PostState createState() => _PostState();
 }
 
-class _RateState extends State<Rate> {
+class _PostState extends State<Post> {
   final _formkey = GlobalKey<FormState>();
 
-  double rating = 0.0;
+  //double rating = 0.0;
   String opinion;
 
-  rateApp(stars, opinion) {
+  post(opinion) {
     FirebaseFirestore.instance
         .collection('Users')
         .doc(myid.loggedInUser.uid)
         .update({
-      'stars': stars,
-      'opinion': opinion,
-      'lastRate': '${DateTime.now().millisecondsSinceEpoch}'
+      //'stars': stars,
+      'post': opinion,
+      'postDate': '${DateTime.now()}'
     });
   }
 
@@ -49,7 +48,8 @@ class _RateState extends State<Rate> {
               children: [
                 Column(
                   children: [
-                    SizedBox(height: 12.0),
+                    SizedBox(height: MediaQuery.of(context).size.height*0.125),
+                    /*
                     Container(
                       alignment: Alignment.center,
                       child: SmoothStarRating(
@@ -68,7 +68,7 @@ class _RateState extends State<Rate> {
                           rating = value;
                         },
                       ),
-                    ),
+                    ),*/
                     Container(
                       padding: EdgeInsets.symmetric(
                           vertical: 20.0, horizontal: 40.0),
@@ -76,7 +76,7 @@ class _RateState extends State<Rate> {
                         key: _formkey,
                         child: TextFormField(
                           decoration: InputDecoration(
-                              hintText: "Write your opinion about the app"),
+                              hintText: "What's on your mind?"),
                           validator: (val) => val.isEmpty
                               ? 'Write your opinion about the app'
                               : null,
@@ -91,13 +91,13 @@ class _RateState extends State<Rate> {
                       minWidth: 100.0,
                       child: RaisedButton(
                           child: Text(
-                            'Submit',
+                            'Post',
                             style: TextStyle(fontSize: 22, color: Colors.white),
                           ),
                           color: Colors.black,
                           onPressed: () async {
                             if (_formkey.currentState.validate()) {
-                              rateApp(rating, opinion);
+                              post(opinion);
                               Navigator.pop(context);
                             }
                           }),

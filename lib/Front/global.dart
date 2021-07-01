@@ -1,25 +1,25 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:wanas/Models/RateCard.dart';
+import 'package:wanas/Front/post.dart';
+import 'package:wanas/Models/postcard.dart';
 import 'package:wanas/front/menu.dart';
-import 'package:wanas/front/rate.dart';
 
-class Rates extends StatefulWidget {
+class Global extends StatefulWidget {
   @override
-  _RatesState createState() => _RatesState();
+  _GlobalState createState() => _GlobalState();
 }
 
-class _RatesState extends State<Rates> {
-  Query rates = FirebaseFirestore.instance
+class _GlobalState extends State<Global> {
+  Query posts = FirebaseFirestore.instance
       .collection('Users')
-      .orderBy('lastRate', descending: true);
+      .orderBy('post', descending: true);
 
   _showRatePanel() {
     showModalBottomSheet(
         context: context,
         builder: (context) {
           return Container(
-            child: Rate(),
+            child: Post(),
           );
         });
   }
@@ -29,7 +29,7 @@ class _RatesState extends State<Rates> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text('Ratings'),
+        title: Text('Global'),
       ),
       drawer: Menu(),
       floatingActionButton: FloatingActionButton(
@@ -39,7 +39,7 @@ class _RatesState extends State<Rates> {
             _showRatePanel();
           }),
       body: StreamBuilder<QuerySnapshot>(
-        stream: rates.snapshots(),
+        stream: posts.snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return Text('Something went wrong');
@@ -56,11 +56,12 @@ class _RatesState extends State<Rates> {
           return ListView.builder(
               itemCount: snapshot.data.docs.length,
               itemBuilder: (_, index) {
-                return RateCard(
+                return PostCard(
                 snapshot.data.docs[index]['profilePicture'],
                 snapshot.data.docs[index]['name'],
-                snapshot.data.docs[index]['opinion'],
-                snapshot.data.docs[index]['stars'],
+                snapshot.data.docs[index]['post'],
+                //snapshot.data.docs[index]['postDate'],
+                //snapshot.data.docs[index]['stars'],
                 );
               });
         },

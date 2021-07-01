@@ -3,17 +3,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:wanas/Front/testo.dart';
 import 'package:wanas/UserStatus/LoginStatus.dart';
 import 'package:wanas/UserStatus/checkConnection.dart';
 import 'package:wanas/helper/helper.dart';
-import 'package:wanas/main.dart';
 import 'package:wanas/front/activities.dart';
 import 'package:wanas/front/animation.dart';
 import 'package:wanas/front/help2.dart';
 import 'package:wanas/front/mychats.dart';
 import 'package:wanas/front/profile.dart' as myid;
-import 'package:wanas/front/rates.dart';
-import 'package:wanas/front/testo.dart';
+import 'package:wanas/front/global.dart';
 import 'package:flutter_restart/flutter_restart.dart';
 class Menu extends StatefulWidget {
   @override
@@ -70,7 +69,7 @@ E/flutter ( 9032): This error might indicate a memory leak if setState() is bein
   final _auth = FirebaseAuth.instance;
 
   static var profileTile = 1;
-  static var activitiesTile, chatsTile, helpTile, ratingTile = 0;
+  static var activitiesTile, chatsTile, helpTile, global = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +105,7 @@ E/flutter ( 9032): This error might indicate a memory leak if setState() is bein
                   setState(() {
                     profileTile = 1;
 
-                    activitiesTile = chatsTile = helpTile = ratingTile = 0;
+                    activitiesTile = chatsTile = helpTile = global = 0;
                   }),
                   Navigator.of(context).pushReplacement(
                      // SlidePosition(page: myid.MyProfile(), x: 1.0)),
@@ -133,7 +132,7 @@ E/flutter ( 9032): This error might indicate a memory leak if setState() is bein
                       setState(() {
                         activitiesTile = 1;
 
-                        profileTile = chatsTile = helpTile = ratingTile = 0;
+                        profileTile = chatsTile = helpTile = global = 0;
                       }),
                       Navigator.of(context).pushReplacement(
                           SlidePosition(page: Activities(), x: 1.0)),
@@ -162,7 +161,7 @@ E/flutter ( 9032): This error might indicate a memory leak if setState() is bein
                         chatsTile = 1;
 
                         profileTile =
-                            activitiesTile = helpTile = ratingTile = 0;
+                            activitiesTile = helpTile = global = 0;
                       }),
                       Navigator.of(context).pushReplacement(
                           SlidePosition(page: MyChats(), x: 1.0)),
@@ -174,13 +173,13 @@ E/flutter ( 9032): This error might indicate a memory leak if setState() is bein
                 },
               ),
               ListTile(
-                tileColor: ratingTile == 1 ? Colors.grey : Colors.transparent,
+                tileColor: global == 1 ? Colors.grey : Colors.transparent,
                 leading: Icon(
-                  FlutterIcons.star_faw5s,
+                  FlutterIcons.globe_americas_faw5s,
                   color: Colors.black,
                   size: MediaQuery.of(context).size.width * 0.07,
                 ),
-                title: Text('Rating',
+                title: Text('Global',
                 style:TextStyle(
                   fontSize:  MediaQuery.of(context).size.width * 0.04,
                 ),
@@ -190,12 +189,12 @@ E/flutter ( 9032): This error might indicate a memory leak if setState() is bein
                   if (reportsCounter == null || reportsCounter < 10)
                     {
                       setState(() {
-                        ratingTile = 1;
+                        global = 1;
 
                         profileTile = chatsTile = helpTile = activitiesTile = 0;
                       }),
                       Navigator.of(context).pushReplacement(
-                          SlidePosition(page: Rates(), x: 1.0)),
+                          SlidePosition(page: Global(), x: 1.0)),
                     }
                   else
                     {banDialog(context)}
@@ -217,7 +216,7 @@ E/flutter ( 9032): This error might indicate a memory leak if setState() is bein
                   setState(() {
                     helpTile = 1;
 
-                    activitiesTile = chatsTile = profileTile = ratingTile = 0;
+                    activitiesTile = chatsTile = profileTile = global = 0;
                   }),
                   Navigator.of(context)
                       .pushReplacement(SlidePosition(page: Help2(), x: 1.0)),
@@ -267,7 +266,7 @@ E/flutter ( 9032): This error might indicate a memory leak if setState() is bein
 
                   setState(() {
                     profileTile =
-                        activitiesTile = chatsTile = helpTile = ratingTile = 0;
+                        activitiesTile = chatsTile = helpTile = global = 0;
                   });
 
                   Helper.updateStatus(myid.loggedInUser.uid, 'offline');
@@ -296,7 +295,26 @@ E/flutter ( 9032): This error might indicate a memory leak if setState() is bein
                   }
                 },
               ),
-              
+             /* 
+              ListTile(
+                leading: Icon(
+                  FlutterIcons.exit_to_app_mco,
+                  color: Colors.black,
+                  size: MediaQuery.of(context).size.width * 0.07,
+                ),
+                title: Text('Testo',
+                style:TextStyle(
+                  fontSize:  MediaQuery.of(context).size.width * 0.04,
+                ),
+                ),
+                
+                  
+                onTap: () => {
+                  Navigator.of(context)
+                      .pushReplacement(SlidePosition(page: MyApple(), x: 1.0)),
+                },
+              ),
+              */
               /*ListTile(
                 leading: Icon(
                   FlutterIcons.setting_ant,

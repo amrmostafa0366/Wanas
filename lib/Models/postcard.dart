@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:wanas/Models/StarRating.dart';
 
-class RateCard extends StatelessWidget {
+class PostCard extends StatelessWidget {
   final String image;
   final String name;
   final String opinion;
-  final double stars;
+  //final String date;
+  //final double stars;
 
-  RateCard(this.image, this.name, this.opinion, this.stars);
+  PostCard(this.image, this.name, this.opinion/*, this.stars,this.date*/);
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +30,11 @@ class RateCard extends StatelessWidget {
                 fontFamily: 'YuseiMagic',
               ),
             ),
-            subtitle: StarRating(
+          /*  subtitle: StarRating(
                 rating: stars,
                 color: Colors.black,
-              ),
+              ),*/
+             // subtitle: ,
             ),
 
          /* Padding(
