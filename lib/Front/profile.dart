@@ -18,6 +18,7 @@ import 'package:wanas/front/staticMap.dart';
 import 'editprofile.dart';
 
 User loggedInUser;
+String country = '';
 final _auth = FirebaseAuth.instance;
 
 class Profile extends StatefulWidget {
@@ -71,6 +72,23 @@ class _ProfileState extends State<Profile> {
       Navigator.of(context).push(SlidePosition(page: BlockList(), x: 1.0));
     }
   }
+
+///////////////////////////testo
+
+  getCountry() async {
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(loggedInUser.uid)
+        .get()
+        .then((DocumentSnapshot userSnapshot) {
+      setState(() {
+        country = userSnapshot['country'];
+      });
+    });
+    // return stars;
+  }
+
+///////////////////////////////
 
 //user's profile "viewProfile" from "Chat"
   getOldRate() async {
@@ -146,7 +164,6 @@ class _ProfileState extends State<Profile> {
 
 //
 
-
 //
 
 //user's profile "viewProfile" from "Chat"
@@ -169,12 +186,12 @@ class _ProfileState extends State<Profile> {
       onPressed: () async {
         oldRate = getOldRate();
         oldRate = await oldRate;
-        print('old rate '+oldRate.toString());
+        print('old rate ' + oldRate.toString());
         // getOldRate();
 
         //if (oldRate != 0.0) { //thats wrong,, because if i gave the user zero rate i can give him another zero rates,,,
         //if its not the first time to rate this user ,,
-        if (oldRate!=null) {
+        if (oldRate != null) {
           stars = getStars();
           stars = await stars;
           stars = stars - oldRate;
@@ -410,10 +427,9 @@ class _ProfileState extends State<Profile> {
   void initState() {
     super.initState();
     getCurrentUser();
-
+    getCountry();
     if (widget.number == 1) {
-      checkUnWanted =
-          checkUnwanted(loggedInUser.uid, widget.hisid);
+      checkUnWanted = checkUnwanted(loggedInUser.uid, widget.hisid);
       getUsersData();
     }
   }
@@ -480,6 +496,7 @@ class _ProfileState extends State<Profile> {
                           snapshot.data['numUsersRatedMe'];
                     }
 
+                   // country = snapshot.data['country'];
                     String name = snapshot.data['name'];
                     String email = snapshot.data['email'];
                     String about = snapshot.data['about'];
@@ -673,8 +690,8 @@ class _ProfileState extends State<Profile> {
                         ProfileTile(
                             'Gender', gender, FlutterIcons.gender_male_mco),
 
-                        ProfileTile(
-                            'Creation date', timeCreation, Icons.access_time_outlined)
+                        ProfileTile('Creation date', timeCreation,
+                            Icons.access_time_outlined)
                       ],
                     );
                   })

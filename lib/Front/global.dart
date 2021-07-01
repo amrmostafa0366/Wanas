@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:wanas/Front/post.dart';
+import 'package:wanas/front/post.dart';
 import 'package:wanas/Models/postcard.dart';
 import 'package:wanas/front/menu.dart';
+import 'package:wanas/front/profile.dart' as myid;
 
 class Global extends StatefulWidget {
   @override
@@ -10,10 +11,10 @@ class Global extends StatefulWidget {
 }
 
 class _GlobalState extends State<Global> {
-
   Query posts = FirebaseFirestore.instance
       .collection('Users')
-      .orderBy('postDate', descending: true);
+      .orderBy('postDate', descending: true)
+      .where('country', isEqualTo: myid.country);
 
   _showRatePanel() {
     showModalBottomSheet(
@@ -58,11 +59,11 @@ class _GlobalState extends State<Global> {
               itemCount: snapshot.data.docs.length,
               itemBuilder: (_, index) {
                 return PostCard(
-                snapshot.data.docs[index]['profilePicture'],
-                snapshot.data.docs[index]['name'],
-                snapshot.data.docs[index]['post'],
-                snapshot.data.docs[index]['postDate'],
-                //snapshot.data.docs[index]['stars'],
+                  snapshot.data.docs[index]['profilePicture'],
+                  snapshot.data.docs[index]['name'],
+                  snapshot.data.docs[index]['post'],
+                  snapshot.data.docs[index]['postDate'],
+                  //snapshot.data.docs[index]['stars'],
                 );
               });
         },

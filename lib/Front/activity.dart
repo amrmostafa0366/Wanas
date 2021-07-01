@@ -1,11 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:wanas/front/animation.dart';
+import 'dart:math';
 import 'package:wanas/front/profile.dart' as myid;
-//import 'package:wanas/my/myprofile.dart' as myid;
-import 'dart:math'; 
-//import 'package:wanas/my/userProfile.dart';
-
 class Activity extends StatefulWidget {
   final String activity;
   final lat, long;
@@ -54,9 +51,8 @@ class _ActivityState extends State<Activity> {
       users = FirebaseFirestore.instance
           .collection('Users')
           .where('activity', isEqualTo:activity)
-         // .where('country', isEqualTo: widget.activity)
+      //    .where('country', isEqualTo:myid.country)
           .where('id', isNotEqualTo: myid.loggedInUser.uid);
-          
     });
   }
 
@@ -90,11 +86,12 @@ class _ActivityState extends State<Activity> {
     } else if (widget.activity == 'tennis') {
       activity('tennis');
     }
+    
   }
 
   @override
   void initState() {
-    choose();
+   choose();
     super.initState();
   }
 
@@ -112,8 +109,8 @@ class _ActivityState extends State<Activity> {
     });
     super.dispose();
   }
-  
-double dist=0.0;
+  /*
+  int dist = 0;
 
   filterDialog() {
   // set up the buttons
@@ -139,7 +136,11 @@ double dist=0.0;
       
     ),
     onPressed: () {
+        print(dist);
+        /*
         
+        
+        */
       }
   );
 
@@ -149,7 +150,7 @@ double dist=0.0;
       "Filter",
       style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06),
     ),
- /*   content: TextFormField(
+    content: TextFormField(
                       style: TextStyle(color: Colors.black),
                       decoration: InputDecoration(
                         hintText: "distance in meter, ex:500",
@@ -157,12 +158,14 @@ double dist=0.0;
                             color: Colors.grey,
                             fontSize: MediaQuery.of(context).size.width * .045),
                       ),
+                      // ignore: deprecated_member_use
+                      inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
                       validator: (val) =>
-                          val.isEmpty ? 'Enter your name' : null,
+                          val.isEmpty ? 'Enter the distance' : null,
                       onChanged: (val) {
-                        setState(() => dist = double.parse(val));
+                        setState(() =>  dist = int.tryParse(val));
                       },
-                    ),*/
+                    ),
     actions: [
       cancle,
       apply,
@@ -177,7 +180,7 @@ double dist=0.0;
     },
   );
 }
-
+*/
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -188,13 +191,13 @@ double dist=0.0;
             fontSize: MediaQuery.of(context).size.width * 0.056,
           ),
           ),
-          actions:[
+       /*   actions:[
             IconButton(
               onPressed:(){
                 filterDialog();
             },
              icon: Icon(Icons.filter_alt_sharp))
-          ],
+          ], */
         ),
         body: StreamBuilder<QuerySnapshot>(
           stream: users.snapshots(),

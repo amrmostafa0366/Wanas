@@ -68,3 +68,25 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     );
   }
 }
+/**
+ * 
+ DropdownButtonFormField(
+                      value: _currentCountry,
+                      items: countries.map((country) {
+                        return DropdownMenuItem(
+                          value: country,
+                          child: Text(
+                            country,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * .045,
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (val) => setState(() => _currentCountry = val),
+                      validator: (val) =>
+                          val == 'Country' ? 'Where are you from?' : null,
+                    ),
+                    */
