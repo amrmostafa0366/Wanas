@@ -583,7 +583,7 @@ class _ProfileState extends State<Profile> {
                                         0.02,
                                     top: MediaQuery.of(context).size.height *
                                         0.25,
-                                         width: MediaQuery.of(context).size.width / 7,
+                                      //   width: MediaQuery.of(context).size.width / 7,
                                     child: Container(
                                       height:
                                           MediaQuery.of(context).size.width *
@@ -618,7 +618,7 @@ class _ProfileState extends State<Profile> {
                                         0.60,
                                     top: MediaQuery.of(context).size.height *
                                         0.38,
-                                        width: MediaQuery.of(context).size.width / 6,
+                                  //      width: MediaQuery.of(context).size.width / 6,
                                     child: Container(
                                       height:
                                           MediaQuery.of(context).size.width *

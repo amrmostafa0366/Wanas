@@ -5,7 +5,7 @@ import 'package:wanas/front/animation.dart';
 import 'package:wanas/front/menu.dart';
 
 final List<String> howToUse = [
-  'https://firebasestorage.googleapis.com/v0/b/wanas-7af81.appspot.com/o/help%2Foverview%2Fhowtouse%2F1.jpg?alt=media&token=486bde2d-df7e-4677-962d-53ecfacaa5d1',
+  'https://firebasestorage.googleapis.com/v0/b/wanas-7af81.appspot.com/o/help%2Fprofile%2FWhatsApp%20Image%202021-07-02%20at%2019.36.36.jpeg?alt=media&token=84a835dd-5363-4354-afbe-05b4250a6282',
   'https://firebasestorage.googleapis.com/v0/b/wanas-7af81.appspot.com/o/help%2Foverview%2Fhowtouse%2F2.jpg?alt=media&token=513ab7a8-ca79-4bde-9a47-f96552e8d5a9',
   'https://firebasestorage.googleapis.com/v0/b/wanas-7af81.appspot.com/o/help%2Foverview%2Fhowtouse%2F3.jpg?alt=media&token=6547cece-fce7-4365-a23f-d9fdd1360880',
   'https://firebasestorage.googleapis.com/v0/b/wanas-7af81.appspot.com/o/help%2Foverview%2Fhowtouse%2F4.jpg?alt=media&token=c6454be5-83e9-45f5-be5a-fa6f9c57795c',
@@ -49,6 +49,27 @@ final List<String> howToUse = [
   'https://firebasestorage.googleapis.com/v0/b/wanas-7af81.appspot.com/o/help%2Fothers%2F5.jpg?alt=media&token=818e3dfa-39b5-468d-becc-3b84d10d0a4a',
   'https://firebasestorage.googleapis.com/v0/b/wanas-7af81.appspot.com/o/help%2Fothers%2F1.jpg?alt=media&token=d306270b-b3c5-46d5-a99b-d3908cb377bc',
   'https://firebasestorage.googleapis.com/v0/b/wanas-7af81.appspot.com/o/help%2Fothers%2F8.jpg?alt=media&token=39e8194c-0d80-45ae-8741-f31f6c8e7222',
+  'https://firebasestorage.googleapis.com/v0/b/wanas-7af81.appspot.com/o/help%2Fprofile%2FIMG-20210702-WA0001.jpg?alt=media&token=7358c00f-7e27-4998-adfb-c61471c282c5',
+  'https://firebasestorage.googleapis.com/v0/b/wanas-7af81.appspot.com/o/help%2Fprofile%2FIMG-20210702-WA0004.jpg?alt=media&token=03874a69-e288-4c3d-9036-267b6c52a999',
+  'https://firebasestorage.googleapis.com/v0/b/wanas-7af81.appspot.com/o/help%2Fprofile%2FIMG-20210702-WA0005.jpg?alt=media&token=ea15af2f-d9d6-45cc-94b0-bbd286086e57',
+  'https://firebasestorage.googleapis.com/v0/b/wanas-7af81.appspot.com/o/help%2Fprofile%2FIMG-20210702-WA0007.jpg?alt=media&token=0b098cee-eab5-47f9-bdb4-272e8ceffe9f',
+  'https://firebasestorage.googleapis.com/v0/b/wanas-7af81.appspot.com/o/help%2Fprofile%2FIMG-20210702-WA0008.jpg?alt=media&token=cba7d319-d4fb-4620-9da2-12311f1ba6ee',
+  'https://firebasestorage.googleapis.com/v0/b/wanas-7af81.appspot.com/o/help%2Fprofile%2FWhatsApp%20Image%202021-07-02%20at%2020.26.20.jpeg?alt=media&token=4b3096ea-4f66-4332-ad8e-cfd9d29c472e',
+  'https://firebasestorage.googleapis.com/v0/b/wanas-7af81.appspot.com/o/help%2Fprofile%2FWhatsApp%20Image%202021-07-02%20at%2020.26.33.jpeg?alt=media&token=fcb9dc0a-339b-480c-81c3-37a984fc6bf2',
+  'https://firebasestorage.googleapis.com/v0/b/wanas-7af81.appspot.com/o/help%2Fprofile%2FWhatsApp%20Image%202021-07-02%20at%2020.26.54.jpeg?alt=media&token=49ac12ef-0f46-43f5-b7f9-8afb66fd2002',
+  'https://firebasestorage.googleapis.com/v0/b/wanas-7af81.appspot.com/o/help%2Fprofile%2FIMG-20210702-WA0002.jpg?alt=media&token=1ef4e809-2aa0-4fcf-af36-5a34cdb38bbc',
+  'https://firebasestorage.googleapis.com/v0/b/wanas-7af81.appspot.com/o/help%2Fprofile%2FIMG-20210702-WA0011.jpg?alt=media&token=4b506bf1-9905-4d79-b480-6ae43b21b802',
+  'https://firebasestorage.googleapis.com/v0/b/wanas-7af81.appspot.com/o/help%2Fprofile%2FWhatsApp%20Image%202021-07-02%20at%2020.46.46.jpeg?alt=media&token=29f460d7-2c79-46ef-9660-36a131d0cff1',
+  'https://firebasestorage.googleapis.com/v0/b/wanas-7af81.appspot.com/o/help%2Fprofile%2FIMG-20210702-WA0017.jpg?alt=media&token=bad71ca0-d227-4cb7-adaf-010e80996308', //55
+  'https://firebasestorage.googleapis.com/v0/b/wanas-7af81.appspot.com/o/help%2Fprofile%2FIMG-20210702-WA0018.jpg?alt=media&token=fb9c9d75-f415-4e0f-b2ad-542f52cb0e51',
+  'https://firebasestorage.googleapis.com/v0/b/wanas-7af81.appspot.com/o/help%2Fprofile%2FIMG-20210702-WA0019.jpg?alt=media&token=7d6f0ff2-19fb-4e2f-9bca-456bf4a03ee6',
+  'https://firebasestorage.googleapis.com/v0/b/wanas-7af81.appspot.com/o/help%2Fprofile%2FIMG-20210702-WA0020.jpg?alt=media&token=d57631c9-0eb9-4604-9824-3ea2c6644797',
+  'https://firebasestorage.googleapis.com/v0/b/wanas-7af81.appspot.com/o/help%2Fprofile%2FIMG-20210702-WA0021.jpg?alt=media&token=0ba7468e-d4e1-4da6-b9a8-3b35a24f7372',
+  'https://firebasestorage.googleapis.com/v0/b/wanas-7af81.appspot.com/o/help%2Fprofile%2FIMG-20210702-WA0013.jpg?alt=media&token=4cdefb5d-88b3-426f-95c7-9f964e9a7382',//60
+  'https://firebasestorage.googleapis.com/v0/b/wanas-7af81.appspot.com/o/help%2Fprofile%2FIMG-20210702-WA0014.jpg?alt=media&token=81dca87e-1802-412a-b011-6f0d37a91053',
+  'https://firebasestorage.googleapis.com/v0/b/wanas-7af81.appspot.com/o/help%2Fprofile%2FIMG-20210702-WA0015.jpg?alt=media&token=8027acc3-1b47-491a-b0ab-cab649522e06',
+  'https://firebasestorage.googleapis.com/v0/b/wanas-7af81.appspot.com/o/help%2Fprofile%2FIMG-20210702-WA0016.jpg?alt=media&token=55e641b2-6af2-4422-8b47-d7d5ed721f1a',
+  
 ];
 
 class Help2 extends StatefulWidget {
@@ -218,14 +239,198 @@ class _Help2State extends State<Help2> {
             )),
           ),
           getExpasionTiles(
-              type: 3,
+              type: 5,
               mainTitle: 'Profile',
               listTile1: 'Profile picture',
-              listTile2: 'Block list',
-              listTile3: 'Name, Bio, Age',
-              page1: HowToUse(),
-              page2: HowToUse(),
-              page3: HowToUse()),
+              listTile2:  'Cover picture',
+              listTile3:  'Remove picture',
+              listTile4: 'Block list',
+              listTile5: 'Name, Bio, Age',
+              page1: HowToUse(
+                scaffold: Scaffold(
+              appBar: AppBar(
+                backgroundColor: Colors.black,
+                title: Text(
+                  'Profile picture',
+                ),
+              ),
+              body: ListView(
+                children: [
+                  Text(
+                      '\n1.Press on the camera icon.\n',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  CachedNetworkImage(
+                    imageUrl: howToUse[44],
+                  ),
+                  Text('\n2.Press on Gallery.\n',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  CachedNetworkImage(
+                    imageUrl: howToUse[45],
+                  ),
+                  Text('\n3.Select a picture from your gallery then press Done.\n',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  CachedNetworkImage(
+                    imageUrl: howToUse[46],
+                  ),
+                  Text("\n4.Wait till the picture is uploaded.\n",
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  CachedNetworkImage(
+                    imageUrl: howToUse[47],
+                  ),
+                  Text('\n5.And as you see it have been updated successfully.\n',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  CachedNetworkImage(
+                    imageUrl: howToUse[48],
+                  ),
+                  
+                ],
+              ),
+            )),
+              page2: HowToUse(
+                scaffold: Scaffold(
+              appBar: AppBar(
+                backgroundColor: Colors.black,
+                title: Text(
+                  'Cover picture',
+                ),
+              ),
+              body: ListView(
+                children: [
+                  Text(
+                      '\n1.Press on the camera icon.\n',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  CachedNetworkImage(
+                    imageUrl: howToUse[52],
+                  ),
+                  Text('\n2.Press on Gallery.\n',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  CachedNetworkImage(
+                    imageUrl: howToUse[45],
+                  ),
+                  Text('\n3.Select a picture from your gallery then press Done.\n',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  CachedNetworkImage(
+                    imageUrl: howToUse[49],
+                  ),
+                  Text("\n4.Wait till the picture is uploaded.\n",
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  CachedNetworkImage(
+                    imageUrl: howToUse[50],
+                  ),
+                  Text('\n5.And as you see it have been updated successfully.\n',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  CachedNetworkImage(
+                    imageUrl: howToUse[51],
+                  ),
+                  
+                ],
+              ),
+            )),
+              page3: HowToUse(
+                scaffold: Scaffold(
+              appBar: AppBar(
+                backgroundColor: Colors.black,
+                title: Text(
+                  'Cover picture',
+                ),
+              ),
+              body: ListView(
+                children: [
+                  Text(
+                      '\nAfter pressing on the camera icon.\n',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  
+                  Text('\n1.Press on Remove photo.\n',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  CachedNetworkImage(
+                    imageUrl: howToUse[53],
+                  ),
+                  Text('\n2.And as you see your profile picture is removed successfully.\n',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  CachedNetworkImage(
+                    imageUrl: howToUse[54],
+                  ),
+                  Text("\nAnd you can do the same steps with the cover picture.\n",
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  ],
+              ),
+            )),
+              page4: HowToUse(
+                scaffold: Scaffold(
+              appBar: AppBar(
+                backgroundColor: Colors.black,
+                title: Text(
+                  'Block list',
+                ),
+              ),
+              body: ListView(
+                children: [
+                  Text(
+                      '\n1.Press on the three dots icon.\n',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  CachedNetworkImage(
+                    imageUrl: howToUse[55],
+                  ),
+                  Text('\n2.Press on Block list choice.\n',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  CachedNetworkImage(
+                    imageUrl: howToUse[56],
+                  ),
+                  Text('\n3.Select any user to unblock.\n',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  CachedNetworkImage(
+                    imageUrl: howToUse[57],
+                  ),
+                  Text("\n4.Press on unblock.\n",
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  CachedNetworkImage(
+                    imageUrl: howToUse[58],
+                  ),
+                  Text('\n5.Press yes to unblock the selected user.\n',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  CachedNetworkImage(
+                    imageUrl: howToUse[59],
+                  ),
+                  
+                ],
+              ),
+            )),
+              page5: HowToUse(
+                scaffold: Scaffold(
+              appBar: AppBar(
+                backgroundColor: Colors.black,
+                title: Text(
+                  'Name, Bio, Age',
+                ),
+              ),
+              body: ListView(
+                children: [
+                  Text(
+                      '\n1.Press on Edit icon.\n',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  CachedNetworkImage(
+                    imageUrl: howToUse[60],
+                  ),
+                  Text('\n2.Change your profile info as you want.\n',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  CachedNetworkImage(
+                    imageUrl: howToUse[61],
+                  ),
+                  Text('\n3.Press on update.\n',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  CachedNetworkImage(
+                    imageUrl: howToUse[62],
+                  ),
+                  Text("\n4.And as you see i changed my name easily.\n",
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  CachedNetworkImage(
+                    imageUrl: howToUse[63],
+                  ),
+                  
+                ],
+              ),
+            )),
+              ),
           getExpasionTiles(
               type: 3,
               mainTitle: 'Activities',
