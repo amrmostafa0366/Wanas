@@ -55,7 +55,7 @@ class _ActivityState extends State<Activity> {
           .where('id', isNotEqualTo: myid.loggedInUser.uid);
     });
   }
-
+/*
   choose() {
     if (widget.activity == 'celebrate') {
       activity('celebrate');
@@ -85,9 +85,51 @@ class _ActivityState extends State<Activity> {
       activity('swimming');
     } else if (widget.activity == 'tennis') {
       activity('tennis');
+    } else if (widget.activity == 'acting') {
+      activity('acting');
+    } else if (widget.activity == 'aerobics') {
+      activity('aerobics');
+    } else if (widget.activity == 'animal training') {
+      activity('animal training');
+    } else if (widget.activity == 'archery') {
+      activity('archery');
+    } else if (widget.activity == 'basketball') {
+      activity('basketball');
+    } else if (widget.activity == 'boxing') {
+      activity('boxing');
+    } else if (widget.activity == 'chess') {
+      activity('chess');
+    } else if (widget.activity == 'coding') {
+      activity('coding');
+    } else if (widget.activity == 'crochet') {
+      activity('crochet');
+    } else if (widget.activity == 'driving') {
+      activity('driving');
+    } else if (widget.activity == 'golf') {
+      activity('golf');
+    } else if (widget.activity == 'hockey') {
+      activity('hockey');
+    } else if (widget.activity == 'painting') {
+      activity('painting');
+    } else if (widget.activity == 'photography') {
+      activity('photography');
+    } else if (widget.activity == 'reading') {
+      activity('reading');
+    } else if (widget.activity == 'studing') {
+      activity('studing');
+    } else if (widget.activity == 'yoga') {
+      activity('yoga');
+    } else if (widget.activity == 'diving') {
+      activity('diving');
     }
     
   }
+*/
+choose(){
+  if(widget.activity!='none'){
+    activity(widget.activity);
+  }
+}
 
   @override
   void initState() {
@@ -109,78 +151,8 @@ class _ActivityState extends State<Activity> {
     });
     super.dispose();
   }
-  /*
-  int dist = 0;
-
-  filterDialog() {
-  // set up the buttons
-  Widget cancle = FlatButton(
-    child: Text(
-      "Cancle",
-      style: TextStyle(color: Colors.black
-      ,
-      fontSize: MediaQuery.of(context).size.width * 0.045,
-      ),
-    ),
-    onPressed: () {
-      Navigator.pop(context);
-    },
-  );
-  Widget apply = FlatButton(
-    child: Text(
-      "Apply",
-      style: TextStyle(
-        color: Colors.black,
-        fontSize: MediaQuery.of(context).size.width * 0.045,
-      ),
-      
-    ),
-    onPressed: () {
-        print(dist);
-        /*
-        
-        
-        */
-      }
-  );
-
-  // set up the AlertDialog
-  AlertDialog alert = AlertDialog(
-    title: Text(
-      "Filter",
-      style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06),
-    ),
-    content: TextFormField(
-                      style: TextStyle(color: Colors.black),
-                      decoration: InputDecoration(
-                        hintText: "distance in meter, ex:500",
-                        hintStyle: TextStyle(
-                            color: Colors.grey,
-                            fontSize: MediaQuery.of(context).size.width * .045),
-                      ),
-                      // ignore: deprecated_member_use
-                      inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
-                      validator: (val) =>
-                          val.isEmpty ? 'Enter the distance' : null,
-                      onChanged: (val) {
-                        setState(() =>  dist = int.tryParse(val));
-                      },
-                    ),
-    actions: [
-      cancle,
-      apply,
-    ],
-  );
-
-  // show the dialog
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
-  );
-}
-*/
+  
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -191,13 +163,7 @@ class _ActivityState extends State<Activity> {
             fontSize: MediaQuery.of(context).size.width * 0.056,
           ),
           ),
-       /*   actions:[
-            IconButton(
-              onPressed:(){
-                filterDialog();
-            },
-             icon: Icon(Icons.filter_alt_sharp))
-          ], */
+           
         ),
         body: StreamBuilder<QuerySnapshot>(
           stream: users.snapshots(),

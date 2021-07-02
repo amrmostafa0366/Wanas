@@ -18,6 +18,7 @@ class PostCard extends StatelessWidget {
         children: [
           ListTile(
             leading: CircleAvatar(
+              radius: MediaQuery.of(context).size.width * 0.07,
               backgroundColor: Colors.transparent,
               backgroundImage: image == ''
                   ? AssetImage('assets/defProfile.jpg')
@@ -26,7 +27,7 @@ class PostCard extends StatelessWidget {
             title: Text(
               name,
               style: TextStyle(
-                fontSize: 18,
+                fontSize: MediaQuery.of(context).size.width * 0.05,
                 fontFamily: 'YuseiMagic',
               ),
             ),
@@ -34,7 +35,12 @@ class PostCard extends StatelessWidget {
                 rating: stars,
                 color: Colors.black,
               ),*/
-              subtitle: Text(date.substring(0,16)),
+              subtitle: Text(date.substring(0,16) ,
+              style: TextStyle(
+                fontSize: MediaQuery.of(context).size.width * 0.03,
+                fontFamily: 'YuseiMagic',
+              ),
+              ),
             ),
 
          /* Padding(
@@ -75,7 +81,7 @@ class PostCard extends StatelessWidget {
               child: Text(
                 opinion,
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: MediaQuery.of(context).size.width * 0.04,
                   fontFamily: 'Handlee',
                   fontWeight: FontWeight.bold,
                 ),
@@ -83,7 +89,7 @@ class PostCard extends StatelessWidget {
             ),
           ),
 
-         SizedBox(height: 12.0),
+         SizedBox(height: MediaQuery.of(context).size.height * .02,),
        /*   Center(
             child: Container(
               alignment: Alignment.center,

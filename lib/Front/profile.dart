@@ -521,8 +521,7 @@ class _ProfileState extends State<Profile> {
                               alignment: Alignment.topCenter,
                               child: Container(
                                 color: Colors.transparent,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.34,
+                                height:MediaQuery.of(context).size.height * 0.34,
                                 width: MediaQuery.of(context).size.width * 1.0,
                                 child: coverPicture.length == 0
                                     ? Image.asset('assets/Welcome.jpg',
@@ -584,6 +583,7 @@ class _ProfileState extends State<Profile> {
                                         0.02,
                                     top: MediaQuery.of(context).size.height *
                                         0.25,
+                                         width: MediaQuery.of(context).size.width / 7,
                                     child: Container(
                                       height:
                                           MediaQuery.of(context).size.width *
@@ -618,6 +618,7 @@ class _ProfileState extends State<Profile> {
                                         0.60,
                                     top: MediaQuery.of(context).size.height *
                                         0.38,
+                                        width: MediaQuery.of(context).size.width / 6,
                                     child: Container(
                                       height:
                                           MediaQuery.of(context).size.width *

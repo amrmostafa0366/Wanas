@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:wanas/Controllers/UnWantedController.dart';
+import 'package:wanas/UserStatus/checkConnection.dart';
 import 'package:wanas/front/animation.dart';
 import 'package:wanas/front/menu.dart';
 import 'package:wanas/front/mychat.dart';
@@ -89,15 +90,21 @@ class _MyChatsState extends State<MyChats> {
                     ),
                   ),
                   onTap: () async {
-                    var unWanted = checkUnwanted(
-                        myid.loggedInUser.uid, snapshot.data.docs[index]['id']);
-                    navigateToChat(
-                        snapshot.data.docs[index]['id'],
-                        snapshot.data.docs[index]['name'],
-                        snapshot.data.docs[index]['image'],
-                        await unWanted);
-                    markAsRead(
-                        myid.loggedInUser.uid, snapshot.data.docs[index]['id']);
+                    var connection = checkConnection();
+                    connection = await connection;
+                    if (connection == true) {
+                      var unWanted = checkUnwanted(myid.loggedInUser.uid,
+                          snapshot.data.docs[index]['id']);
+                      navigateToChat(
+                          snapshot.data.docs[index]['id'],
+                          snapshot.data.docs[index]['name'],
+                          snapshot.data.docs[index]['image'],
+                          await unWanted);
+                      markAsRead(myid.loggedInUser.uid,
+                          snapshot.data.docs[index]['id']);
+                    } else if (connection == false) {
+                      connectionDialog(context);
+                    }
                   },
                   trailing: snapshot.data.docs[index]['newMessage']
                       ? Text(
