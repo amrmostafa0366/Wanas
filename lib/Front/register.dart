@@ -498,9 +498,9 @@ class _RegisterState extends State<Register> {
                           return 'Enter your email';
                         } else if (!val.contains('@')) {
                           return 'Enter a valid email';
-                        }else if(RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(val)){
+                        }/*else if(RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(val)){
                            return 'Enter a correct email';
-                         }
+                         }*/
                         return null;
                       },
                       onChanged: (val) {

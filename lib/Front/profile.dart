@@ -85,7 +85,6 @@ class _ProfileState extends State<Profile> {
         country = userSnapshot['country'];
       });
     });
-    // return stars;
   }
 
 ///////////////////////////////
