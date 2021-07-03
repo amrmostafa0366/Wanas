@@ -9,6 +9,14 @@ class PostCard extends StatelessWidget {
   //final double stars;
 
   PostCard(this.image, this.name, this.opinion/*, this.stars*/,this.date);
+//^[\u0600-\u065F\u066A-\u06EF\u06FA-\u06FFa-zA-Z]+[\u0600-\u065F\u066A-\u06EF\u06FA-\u06FFa-zA-Z-_]*$
+RegExp regExp = new RegExp(
+  r"^WS{1,2}:\/\/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:56789",
+  caseSensitive: false,
+  multiLine: false,
+);
+
+List<String> arabicLetters=['أ','ب','ت','ث','ج','ح','خ','د','ذ','ر','ز','س','ش','ص','ض','ط','ظ','ع','غ','ف','ق','ك','ل','م','ن','ه','و','ي','ى','ء','ئ','ؤ','ة'];
 
   @override
   Widget build(BuildContext context) {
@@ -75,15 +83,15 @@ class PostCard extends StatelessWidget {
             padding: EdgeInsets.all(5),
           ),
           Container(
-            alignment: Alignment.topCenter,
+            alignment: opinion.contains(RegExp(r'[A-Z]'))? Alignment.topLeft:Alignment.topRight,
             child: Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: Text(
                 opinion,
                 style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.width * 0.04,
-                  fontFamily: 'Handlee',
-                  fontWeight: FontWeight.bold,
+                  fontSize: MediaQuery.of(context).size.width * 0.05,
+                //  fontFamily: 'Handlee',
+                 // fontWeight: FontWeight.bold,
                 ),
               ),
             ),
@@ -108,30 +116,3 @@ class PostCard extends StatelessWidget {
 }
 
 // i need to make it responsive here..
-/*
-
-yoga
-painting
-acting
-hiking
-archery
-aerobics
-aikido
-airsoft
-animal training
-art
-basketball
-photography
-reading
-boxing
-racing
-chess
-coding
-studying
-crochet
-driving
-hockey
-golf
-
-
-*/

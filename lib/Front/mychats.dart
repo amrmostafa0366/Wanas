@@ -40,6 +40,8 @@ class _MyChatsState extends State<MyChats> {
     });
   }
 
+  bool firstClick=true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,6 +92,8 @@ class _MyChatsState extends State<MyChats> {
                     ),
                   ),
                   onTap: () async {
+                    if(firstClick){
+                      firstClick = false;
                     var connection = checkConnection();
                     connection = await connection;
                     if (connection == true) {
@@ -102,8 +106,10 @@ class _MyChatsState extends State<MyChats> {
                           await unWanted);
                       markAsRead(myid.loggedInUser.uid,
                           snapshot.data.docs[index]['id']);
+                          firstClick = true;
                     } else if (connection == false) {
                       connectionDialog(context);
+                    }
                     }
                   },
                   trailing: snapshot.data.docs[index]['newMessage']

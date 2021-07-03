@@ -196,9 +196,11 @@ class _ActivitiesState extends State<Activities> {
                             ),
                             title: Text(snapshot.data[index]['name'],
                                 style: TextStyle(
+                                  fontWeight: FontWeight.bold,
                                   fontSize:
-                                      MediaQuery.of(context).size.width * 0.078,
-                                  fontFamily: 'Bangers',
+                                      MediaQuery.of(context).size.width * 0.055,
+                                     // MediaQuery.of(context).size.width * 0.078,
+                                  //fontFamily: 'Bangers',
                                 )),
                             onTap: () async {
                               var connection = checkConnection();

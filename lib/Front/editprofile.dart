@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:wanas/UserStatus/checkConnection.dart';
 import 'package:wanas/front/profile.dart' as myid;
 
@@ -111,8 +112,15 @@ class _EditProfileState extends State<EditProfile> {
                                   MediaQuery.of(context).size.width * .045),
                         ),
                         initialValue: userDocument['name'],
-                        validator: (val) =>
-                            val.isEmpty ? 'Please enter your name' : null,
+                        validator: (val) {
+                          if (RegExp(r'[!@#<>?":_`~;[\]\\|=+)(*&^%0-9-]')
+                              .hasMatch(val)) {
+                            return 'Enter your name in a right way';
+                          } else if (val.isEmpty) {
+                            return 'Please enter your name';
+                          }
+                          return null;
+                        },
                         onChanged: (val) => setState(() => _currentName = val),
                       ),
                       SizedBox(
@@ -143,9 +151,21 @@ class _EditProfileState extends State<EditProfile> {
                               fontSize:
                                   MediaQuery.of(context).size.width * .045),
                         ),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         initialValue: userDocument['age'],
-                        validator: (val) =>
-                            val.isEmpty ? 'Please enter your age' : null,
+                        validator: (val) {
+                          if(val.isEmpty){
+                            return 'Please enter your age';
+                          }else if(12>int.parse(val)){
+                            return 'seriously!?';
+                          }else if (int.parse(val)>110){
+                            return 'seriously!?';
+                          }
+                          return null;
+                        },
                         onChanged: (val) => setState(() => _currentAge = val),
                       ),
                       SizedBox(
@@ -185,8 +205,7 @@ class _EditProfileState extends State<EditProfile> {
 
                                 updateMyNameToOthers(_currentName);
                                 Navigator.pop(context);
-                              }
-                              else{
+                              } else {
                                 connectionDialog(context);
                               }
                             }

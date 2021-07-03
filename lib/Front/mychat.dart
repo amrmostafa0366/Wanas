@@ -262,6 +262,7 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
         children: <Widget>[
           Expanded(
             child: TextField(
+              
               autofocus: false,
               minLines: 1,
               maxLines: 4,
@@ -270,6 +271,7 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
                   TextStyle(fontSize: MediaQuery.of(context).size.width * .05),
               keyboardType: TextInputType.multiline,
               decoration: InputDecoration(
+                
                 contentPadding: EdgeInsets.symmetric(
                     vertical: MediaQuery.of(context).size.height * .02,
                     horizontal: MediaQuery.of(context).size.width * .05),

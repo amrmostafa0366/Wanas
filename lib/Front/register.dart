@@ -383,8 +383,14 @@ class _RegisterState extends State<Register> {
                             color: Colors.grey,
                             fontSize: MediaQuery.of(context).size.width * .045),
                       ),
-                      validator: (val) =>
-                          val.isEmpty ? 'Enter your name' : null,
+                      validator: (val){
+                         if(RegExp(r'[!@#<>?":_`~;[\]\\|=+)(*&^%0-9-]').hasMatch(val)){
+                           return 'Enter your name in a right way';
+                         }else if(val.isEmpty){
+                         return 'Please enter your name';
+                         }
+                         return null;
+                        },
                       onChanged: (val) {
                         setState(() => name = val);
                       },
@@ -492,7 +498,9 @@ class _RegisterState extends State<Register> {
                           return 'Enter your email';
                         } else if (!val.contains('@')) {
                           return 'Enter a valid email';
-                        }
+                        }else if(RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(val)){
+                           return 'Enter a correct email';
+                         }
                         return null;
                       },
                       onChanged: (val) {
