@@ -10,13 +10,8 @@ class PostCard extends StatelessWidget {
 
   PostCard(this.image, this.name, this.opinion/*, this.stars*/,this.date);
 //^[\u0600-\u065F\u066A-\u06EF\u06FA-\u06FFa-zA-Z]+[\u0600-\u065F\u066A-\u06EF\u06FA-\u06FFa-zA-Z-_]*$
-RegExp regExp = new RegExp(
-  r"^WS{1,2}:\/\/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:56789",
-  caseSensitive: false,
-  multiLine: false,
-);
 
-List<String> arabicLetters=['أ','ب','ت','ث','ج','ح','خ','د','ذ','ر','ز','س','ش','ص','ض','ط','ظ','ع','غ','ف','ق','ك','ل','م','ن','ه','و','ي','ى','ء','ئ','ؤ','ة'];
+
 
   @override
   Widget build(BuildContext context) {

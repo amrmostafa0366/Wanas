@@ -1,13 +1,13 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class MessageBubble extends StatelessWidget {
-  MessageBubble({this.text, this.isMe/*, this.img*/});
+  MessageBubble({this.text, this.isMe/*, this.date , this.img*/});
 
   final String text;
   //final String img;
   final bool isMe;
+  //final date;
 
   @override
   Widget build(BuildContext context) {
@@ -18,25 +18,46 @@ class MessageBubble extends StatelessWidget {
             isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-           // width: MediaQuery.of(context).size.width * 0.75,
-            child: Material(
-              borderRadius: isMe
-                  ? BorderRadius.only(
-                      topRight: Radius.circular(30.0),
-                      topLeft: Radius.circular(30.0),
-                      bottomLeft: Radius.circular(30.0),
-                      bottomRight: Radius.circular(30.0))
-                  : BorderRadius.only(
-                      topLeft: Radius.circular(30.0),
-                      bottomLeft: Radius.circular(30.0),
-                      bottomRight: Radius.circular(30.0),
-                      topRight: Radius.circular(30.0),
+                // width: MediaQuery.of(context).size.width * 0.75,
+                child: Material(
+                  borderRadius: isMe
+                      ? BorderRadius.only(
+                          topRight: Radius.circular(30.0),
+                          topLeft: Radius.circular(30.0),
+                          bottomLeft: Radius.circular(30.0),
+                          bottomRight: Radius.circular(30.0))
+                      : BorderRadius.only(
+                          topLeft: Radius.circular(30.0),
+                          bottomLeft: Radius.circular(30.0),
+                          bottomRight: Radius.circular(30.0),
+                          topRight: Radius.circular(30.0),
+                        ),
+                  //  elevation: 5.0,
+                  color: isMe ? Colors.blue : Colors.black,
+                  child: Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                    child: Text(
+                      text,
+                      style: TextStyle(
+                        color: isMe ? Colors.white : Colors.white,
+                        fontSize: MediaQuery.of(context).size.width * .05,
+                      ),
                     ),
-              //  elevation: 5.0,
-              color: isMe ? Colors.blue : Colors.black,
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                child: /*text.isEmpty
+                  ),
+                ),
+              ),
+        ],
+      ),
+    );
+  }
+}
+
+
+/**
+ * 
+ 
+ /*text.isEmpty
                     ? CachedNetworkImage(
                         imageBuilder: (context, imageProvider) => Container(
                               height: 500.0,
@@ -71,18 +92,5 @@ class MessageBubble extends StatelessWidget {
                         fit: BoxFit.cover,
                         imageUrl: img.toString())
                     : */
-                    Text(
-                        text,
-                        style: TextStyle(
-                          color: isMe ? Colors.white : Colors.white,
-                          fontSize: MediaQuery.of(context).size.width * .05,
-                        ),
-                      ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+
+ */

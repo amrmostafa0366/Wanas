@@ -29,12 +29,13 @@ class MessagesStream extends StatelessWidget {
         for (var message in messages) {
           final messageText = message['message'];
           final messageSender = message['sender'];
-
+         // final  date=message['date'];
           final currentUser = myid.loggedInUser.email;
 
           final messageBubble = MessageBubble(
               text: messageText,
               isMe: currentUser == messageSender,
+              //date: date,
               );
 
           messageBubbles.add(messageBubble);
