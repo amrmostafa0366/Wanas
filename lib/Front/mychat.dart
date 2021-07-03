@@ -257,6 +257,12 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
 
   textfield() {
     return Container(
+      margin:EdgeInsets.only(left:2.0,right:2.0,bottom:3.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(30)),
+        border:Border.all(color:Colors.black,width:1.0,),
+        
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
@@ -278,6 +284,7 @@ class _MyChatState extends State<MyChat> with WidgetsBindingObserver {
                 hintText: 'Type a message...',
                 border: InputBorder.none,
               ),
+              
               controller: messageTextController,
               onChanged: (value) {
                 messageText = value;

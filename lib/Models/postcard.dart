@@ -83,7 +83,7 @@ List<String> arabicLetters=['أ','ب','ت','ث','ج','ح','خ','د','ذ','ر','�
             padding: EdgeInsets.all(5),
           ),
           Container(
-            alignment: opinion.contains(RegExp(r'[A-Z]'))? Alignment.topLeft:Alignment.topRight,
+            alignment: opinion.contains(RegExp('[a-zA-Z]'))? Alignment.topLeft:Alignment.topRight,
             child: Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: Text(
